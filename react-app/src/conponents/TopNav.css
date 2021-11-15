@@ -1,0 +1,11 @@
+.top-nav {
+    background-color: black;
+    width: 100%;
+    height: 30px;
+    color: white;
+}
+
+.top-nav .side-container {
+    width: 1200px;
+    margin: 0 auto;
+}
