@@ -1,22 +1,40 @@
 .search-bar {
-    width: 1170px;
+    width: 1180px;
     overflow: hidden;
     margin: auto;
-    padding: 15px;
     outline: 1px solid #ccc;
+    display: flex;
+    padding: 20px;
 }
 
 .search-bar .logo {
-    width: 330px;
-    
+    width: 300px;
 }
 
 .search-bar .searching {
-    outline: none;
+    outline: 2px solid RGB(226, 90, 22);
     border: none;
-    border-radius: 5px;
-    padding: 20px 25px;
-    width: 600px;
-    background-color: #EFF0F2;
-    font-size: 1.3rem;
+    border-radius: 3px 0px 0px 3px;
+    width: 500px;
+    height: 60px;
+    background-color: white;
+    font-size: 1.5rem;
+    color: black;
+    font-weight: bold;
+    margin-left: 30px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.search-bar .search-btn {
+    outline: 2px solid RGB(226, 90, 22);
+    color: white;
+    background-color: RGB(226, 90, 22);
+    width: 60px;
+    height: 60px;
+    border-radius: 0px 3px 3px 0px;
+    cursor: pointer;
+    font-size: 2rem;
+    margin-top: 20px;
+    padding-top: 5px;
 }
