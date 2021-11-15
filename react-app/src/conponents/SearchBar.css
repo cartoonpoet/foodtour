@@ -1,0 +1,22 @@
+.search-bar {
+    width: 1170px;
+    overflow: hidden;
+    margin: auto;
+    padding: 15px;
+    outline: 1px solid #ccc;
+}
+
+.search-bar .logo {
+    width: 330px;
+    
+}
+
+.search-bar .searching {
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 20px 25px;
+    width: 600px;
+    background-color: #EFF0F2;
+    font-size: 1.3rem;
+}
