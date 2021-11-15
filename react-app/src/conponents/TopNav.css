@@ -1,11 +1,32 @@
 .top-nav {
-    background-color: black;
+    background-color: RGB(51, 51, 51);
     width: 100%;
-    height: 30px;
+    height: 45px;
     color: white;
+    overflow: hidden;
+    font-size: 1.1rem;
 }
 
 .top-nav .side-container {
     width: 1200px;
     margin: 0 auto;
+    display: flex;
 }
+
+.top-nav .side-container .elements-align {
+    display: flex;
+    align-items: center;
+    height: 45px;
+}
+
+.top-nav .side-container .v-line {
+    margin: 0 10px;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.top-nav .side-container .elements:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
