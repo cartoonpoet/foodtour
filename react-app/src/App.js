@@ -17,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Slider />} />
+          <Route path="/search/:keyword" element={<Slider />} />
         </Routes>
       </BrowserRouter>
     </>

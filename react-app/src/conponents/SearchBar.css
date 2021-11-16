@@ -33,8 +33,9 @@
     width: 60px;
     height: 60px;
     border-radius: 0px 3px 3px 0px;
-    cursor: pointer;
     font-size: 2rem;
     margin-top: 20px;
-    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

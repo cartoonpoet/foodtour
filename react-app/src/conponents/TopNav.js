@@ -6,8 +6,8 @@ import SignIn from './SignIn';
 
 // 즐겨찾기
 function bookmark_add() {
-    let bookmark_url = "도메인입력";
-    let bookmark_name = "홈페이지 타이틀";
+    let bookmark_url = "http://localhost:3000/";
+    let bookmark_name = "FoodTour";
 
     try {
         window.external.AddFavorite(bookmark_url, bookmark_name);
