@@ -1,0 +1,56 @@
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    display: flex;
+}
+
+.modal .popup {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    position: relative;
+    margin: auto;
+    vertical-align: middle;
+    border-radius: 5px;
+    text-align: right;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal .popup .close-btn {
+    background: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.5;
+}
+
+.modal .popup .title {
+    color: black;
+    text-align: center;
+    font-weight: 1000;
+    font-size: 2.5rem;
+}
+
+.modal .popup .description {
+    color: black;
+    text-align: center;
+    margin: 15px 0 25px 0;
+}
+
+.modal .popup .kakao {
+    cursor: pointer;
+    width: 220px;
+    margin: 0 auto;
+    display: block;
+}

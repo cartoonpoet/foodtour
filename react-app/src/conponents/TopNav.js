@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import './TopNav.css';
 import { AiFillHome } from "react-icons/ai";
 import { Link, BrowserRouter } from "react-router-dom";
-
+import SignIn from './SignIn';
 
 // 즐겨찾기
 function bookmark_add() {
@@ -17,20 +17,13 @@ function bookmark_add() {
     }
 }
 
-// 카카오 로그인
-const { Kakao } = window;
-function loginWithKakao() {
-    Kakao.Auth.login({
-        success: function (authObj) {
-            alert(JSON.stringify(authObj))
-        },
-        fail: function (err) {
-            alert(JSON.stringify(err))
-        },
-    })
-}
+
 
 function TopNav() {
+    const [modal, setModal] = useState(false);
+
+    const onModal = () => setModal(modal => !modal);
+
     return (
         <div className="top-nav">
             <div className="side-container">
@@ -39,7 +32,8 @@ function TopNav() {
                     <div className="elements-align v-line">|</div>
                     <span className="elements-align elements" onClick={bookmark_add}>즐겨찾기</span>
                     <span className="elements-align v-line">|</span>
-                    <span className="elements-align elements">로그인</span>
+                    <span className="elements-align elements" onClick={onModal}>로그인</span>
+                    {modal && <SignIn onModal={onModal} />}
                 </BrowserRouter>
             </div>
         </div>
