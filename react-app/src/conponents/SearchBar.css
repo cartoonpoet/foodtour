@@ -2,9 +2,9 @@
     width: 1180px;
     overflow: hidden;
     margin: auto;
-    outline: 1px solid #ccc;
+    /* outline: 1px solid #ccc; */
     display: flex;
-    padding: 20px;
+    padding: 20px 20px 40px 20px;
 }
 
 .search-bar .logo {

@@ -4,7 +4,7 @@ import {
   Route
 } from "react-router-dom";
 import React from "react";
-import Home from "./pages/Home";
+import Slider from "./pages/Slider";
 import TopNav from "./conponents/TopNav";
 import SearchBar from "./conponents/SearchBar";
 import './conponents/common.css';
@@ -16,7 +16,7 @@ function App() {
       <SearchBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Slider />} />
         </Routes>
       </BrowserRouter>
     </>
