@@ -1,0 +1,35 @@
+.top-line {
+    opacity: 0.5;
+}
+
+.content-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.content-container .filter-box {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    font-size: 1.3rem;;
+    color: #ccc;
+    padding: 20px 10px;
+}
+
+.content-container .filter-box .filter-type {
+    cursor: pointer;
+}
+
+.content-container .filter-box .v-line {
+    margin: 0px 10px;
+}
+
+.content-container .filter-box .selected {
+    color: black;
+    font-weight: bold;
+}
+
+.content-container .filter-box input:checked + .filter-type{
+    font-weight: bold;
+    color: black;
+}
