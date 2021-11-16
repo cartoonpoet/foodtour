@@ -37,7 +37,7 @@ function SearchResult() {
                         </React.Fragment>
                     ))}
                 </ul>
-
+                <Element />
             </div>
         </>
     );

@@ -1,0 +1,32 @@
+.element-container {
+    overflow: hidden;
+    width: 250px;
+}
+
+.element-container .thumb {
+    width: 100%;
+}
+
+.element-container .info-box {
+    width: 100%;
+    padding-top: 15px;
+}
+
+.element-container .info-box .name-canvas {
+    font-weight: bold;
+    font-size: 2rem;
+    width: 100%;
+}
+
+.element-container .info-box .name-canvas .name {
+    max-width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    float: left;
+}
+
+.element-container .info-box .name-canvas .grade {
+    width: 20%;
+    color:lightcoral;
+}

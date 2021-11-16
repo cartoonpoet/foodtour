@@ -24,7 +24,7 @@ function SignIn(props) {
                     <div>
                         <div className="title">로그인</div>
                         <div className="description">로그인 하면 자기가 방문한 곳에<br />리뷰를 작성할 수 있어요</div>
-                        <img src="assets/signin/kakao_login_large_narrow.png" alt="kakao login" className="kakao" onClick={loginWithKakao} />
+                        <img src="/assets/signin/kakao_login_large_narrow.png" alt="kakao login" className="kakao" onClick={loginWithKakao} />
                     </div>
                 </div>
             </div>
