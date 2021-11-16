@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './TopNav.css';
 import { AiFillHome } from "react-icons/ai";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SignIn from './SignIn';
 
 // 즐겨찾기
@@ -27,14 +27,12 @@ function TopNav() {
     return (
         <div className="top-nav">
             <div className="side-container">
-                <BrowserRouter>
-                    <Link to="/" className="elements-align elements"><AiFillHome />&nbsp;홈으로</Link>
-                    <div className="elements-align v-line">|</div>
-                    <span className="elements-align elements" onClick={bookmark_add}>즐겨찾기</span>
-                    <span className="elements-align v-line">|</span>
-                    <span className="elements-align elements" onClick={onModal}>로그인</span>
-                    {modal && <SignIn onModal={onModal} />}
-                </BrowserRouter>
+                <Link to="/" className="elements-align elements"><AiFillHome />&nbsp;홈으로</Link>
+                <div className="elements-align v-line">|</div>
+                <span className="elements-align elements" onClick={bookmark_add}>즐겨찾기</span>
+                <span className="elements-align v-line">|</span>
+                <span className="elements-align elements" onClick={onModal}>로그인</span>
+                {modal && <SignIn onModal={onModal} />}
             </div>
         </div>
     );

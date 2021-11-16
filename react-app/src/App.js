@@ -9,7 +9,6 @@ import './conponents/common.css';
 function App() {
   return (
     <>
-
       <Router>
         <TopNav />
         <SearchBar />
