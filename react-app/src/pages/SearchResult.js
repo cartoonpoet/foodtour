@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import axios from 'axios';
 import none_img from '../assets/none-img/none-img.jpg';
 import CircularProgress from '@mui/material/CircularProgress';
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 dotenv.config({ path: "../.env" });
 
@@ -156,6 +157,9 @@ function SearchResult({ match }) {
                         totalItemsCount={searchData.length}
                         handlePageChange={handlePageChange}
                     />}
+                    <div className="no-data-alert">
+                        <AiOutlineExclamationCircle />&nbsp;검색 결과가 없습니다.
+                    </div>
                 </div>}
 
             </div>
