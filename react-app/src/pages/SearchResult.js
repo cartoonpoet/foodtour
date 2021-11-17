@@ -157,9 +157,9 @@ function SearchResult({ match }) {
                         totalItemsCount={searchData.length}
                         handlePageChange={handlePageChange}
                     />}
-                    <div className="no-data-alert">
+                    {searchData.length === 0 && <div className="no-data-alert">
                         <AiOutlineExclamationCircle />&nbsp;검색 결과가 없습니다.
-                    </div>
+                    </div>}
                 </div>}
 
             </div>
