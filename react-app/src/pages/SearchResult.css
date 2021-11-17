@@ -37,7 +37,10 @@
 .content-container .result-elements {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
 }
 
+.content-container .result-elements .paging {
+    display: block;
+}

@@ -3,16 +3,16 @@ import "./Element.css";
 import { BsFillEyeFill, BsFillPencilFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-function Element() {
+function Element(props) {
     return (
         <>
             <div className="element-container">
-                <Link to="/">
-                    <img className="thumb" alt="img is not" src="https://mp-seoul-image-production-s3.mangoplate.com/513273_1598598343472200.jpg?fit=around|359:240&crop=359:240;*,*&output-format=jpg&output-quality=80" />
+                <Link to="/" className="img-box">
+                    <img className="thumb" alt="img is not" src={props.firstImage} />
                 </Link>
-                <ul class="info-box">
-                    <li className="name-canvas"><Link to="/" className="name">스시ddsdfsdfsdfsdfdsfsdffsdffsdfsdffds호시카이</Link> <span className="grade">4.7</span></li>
-                    <li className="fliter-type">음식점</li>
+                <ul className="info-box">
+                    <li className="name-canvas"><Link to="/" className="name">{props.title}</Link> <span className="grade">4.7</span></li>
+                    <li className="fliter-type">{props.contentTypeId === 12 ? "관광지" : "음식점"}</li>
                     <li className="extra-info">
                         <BsFillEyeFill className="views" />1,000
                         <BsFillPencilFill className="reviews" />245

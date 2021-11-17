@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchResult.css";
 import Element from "../conponents/Element";
+import Paging from "../conponents/Paging";
+import dotenv from "dotenv";
+import axios from 'axios';
+import none_img from '../assets/none-img/none-img.jpg';
 
-function SearchResult() {
+dotenv.config({ path: "../.env" });
+
+function SearchResult({ match }) {
+    const { keyword } = match.params;
+    const [searchData, setSearchData] = useState([]);
+
     const [option, setOption] = useState({
         selectList: ["전체", "음식점", "관광지"],
         selectValue: "전체"
@@ -15,7 +24,56 @@ function SearchResult() {
         });
     };
 
+    useEffect(() => {
+        let contentTypeId = '';
+        switch (option.selectValue) {
+            case "음식점":
+                contentTypeId = 39;
+                break;
+            case "관광지":
+                contentTypeId = 12;
+                break;
+            default:
+                contentTypeId = '';
+                break;
+        }
 
+        axios.get("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword", {
+            params: {
+                serviceKey: process.env.REACT_APP_TOUR_API_DECODING_KEY,
+                MobileApp: "FoodTour",
+                MobileOS: "ETC",
+                pageNo: 1,
+                numOfRows: 1000000000,
+                listYN: "Y",
+                arrange: "P",
+                contentTypeId: contentTypeId,
+                keyword: keyword,
+                _type: "json"
+            }
+        })
+            .then(function (response) {
+                //response
+                const result = response.data;
+                // console.log("total : " + result.response.body.totalCount);
+                let dataSet = [];
+                for (let i = 0; i < result.response.body.totalCount; i++) {
+                    if (result.response.body.items.item[i].contenttypeid === 12 || result.response.body.items.item[i].contenttypeid === 39) {
+                        dataSet.push({
+                            firstimage: result.response.body.items.item[i].firstimage ? result.response.body.items.item[i].firstimage : none_img,
+                            contentid: result.response.body.items.item[i].contentid,
+                            contentTypeId: result.response.body.items.item[i].contenttypeid,
+                            title: result.response.body.items.item[i].title
+                        });
+                    }
+                }
+                setSearchData([...dataSet]);
+            }).catch(function (error) {
+                //오류발생시 실행
+            }).then(function () {
+                //항상 실행
+            });
+    }, [option.selectValue, keyword]);
 
     return (
         <>
@@ -37,16 +95,21 @@ function SearchResult() {
                         </React.Fragment>
                     ))}
                 </ul>
-                <div className="result-elements">
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
-                    <Element className="element" />
+                <div>
+                    <div className="result-elements">
+                        {searchData.map((value, i) => (
+                            <React.Fragment key={i}>
+                                <Element firstImage={value.firstimage}
+                                    title={value.title}
+                                    contentTypeId={value.contentTypeId}
+                                    contentId={value.contentId}
+                                />
+                            </React.Fragment>
+                        ))}
+                    </div>
+                    <Paging className="paging" />
                 </div>
+
             </div>
         </>
     );
