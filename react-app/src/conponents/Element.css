@@ -1,6 +1,7 @@
 .element-container {
     overflow: hidden;
     width: 250px;
+    margin: 20px 25px;
 }
 
 .element-container .thumb {

@@ -37,7 +37,16 @@ function SearchResult() {
                         </React.Fragment>
                     ))}
                 </ul>
-                <Element />
+                <div className="result-elements">
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                    <Element className="element" />
+                </div>
             </div>
         </>
     );
