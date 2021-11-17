@@ -34,6 +34,7 @@ function SearchResult({ match }) {
     };
 
     useEffect(() => {
+        setPage(1);
         let contentTypeId = '';
         switch (option.selectValue) {
             case "음식점":
