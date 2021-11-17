@@ -24,6 +24,7 @@ function SearchResult({ match }) {
             ...option,
             selectValue: e.target.value
         });
+        setPage(1);
     };
 
     const [page, setPage] = useState(1);
@@ -68,7 +69,7 @@ function SearchResult({ match }) {
                 for (let i = 0; i < result.response.body.totalCount; i++) {
                     if (result.response.body.items.item[i].contenttypeid === 12 || result.response.body.items.item[i].contenttypeid === 39) {
                         dataSet.push({
-                            firstimage: result.response.body.items.item[i].firstimage ? result.response.body.items.item[i].firstimage : none_img,
+                            firstimage: result.response.body.items.item[i].firstimage !== undefined ? result.response.body.items.item[i].firstimage : none_img,
                             contentid: result.response.body.items.item[i].contentid,
                             contentTypeId: result.response.body.items.item[i].contenttypeid,
                             title: result.response.body.items.item[i].title
@@ -85,6 +86,42 @@ function SearchResult({ match }) {
     }, [option.selectValue, keyword]);
 
 
+    const elementsRendering = () => {
+        const result = [];
+        console.log(searchData.length);
+
+        if (searchData.length > 0) {
+            if (page !== Math.ceil(searchData.length / 20)) {
+                for (let i = (page - 1) * 20; i < searchData.length - (searchData.length / 20 - page) * 20; i++) {
+                    result.push(
+                        <React.Fragment key={i}>
+                            <Element
+                                firstImage={searchData[i].firstimage}
+                                title={searchData[i].title}
+                                contentTypeId={searchData[i].contentTypeId}
+                                contentId={searchData[i].contentId}
+                            />
+                        </React.Fragment>
+                    );
+                }
+            }
+            else {
+                for (let i = (page - 1) * 20; i < searchData.length; i++) {
+                    result.push(
+                        <React.Fragment key={i}>
+                            <Element
+                                firstImage={searchData[i].firstimage}
+                                title={searchData[i].title}
+                                contentTypeId={searchData[i].contentTypeId}
+                                contentId={searchData[i].contentId}
+                            />
+                        </React.Fragment>
+                    );
+                }
+            }
+        }
+        return result;
+    }
 
 
     return (
@@ -107,28 +144,19 @@ function SearchResult({ match }) {
                         </React.Fragment>
                     ))}
                 </ul>
-                {isLoading ? (<div className="progress-bar">
+                {isLoading && <div className="progress-bar">
                     <CircularProgress color="secondary" />
-                </div>) : (<div>
+                </div>}
+                {!isLoading && <div>
                     <div className="result-elements">
-                        {searchData.map((value, i) => (
-                            <React.Fragment key={i}>
-                                <Element firstImage={value.firstimage}
-                                    title={value.title}
-                                    contentTypeId={value.contentTypeId}
-                                    contentId={value.contentId}
-                                />
-                            </React.Fragment>
-                        ))}
+                        {elementsRendering()}
                     </div>
-                    <Paging className="paging"
+                    {searchData.length > 0 && <Paging className="paging"
                         page={page}
                         totalItemsCount={searchData.length}
                         handlePageChange={handlePageChange}
-                    />
-                </div>)}
-
-
+                    />}
+                </div>}
 
             </div>
         </>
