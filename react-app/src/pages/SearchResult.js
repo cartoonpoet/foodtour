@@ -24,7 +24,6 @@ function SearchResult({ match }) {
             ...option,
             selectValue: e.target.value
         });
-        setPage(1);
     };
 
     const [page, setPage] = useState(1);
