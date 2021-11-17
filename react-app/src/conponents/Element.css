@@ -30,3 +30,22 @@
     width: 20%;
     color:lightcoral;
 }
+
+.element-container .info-box .fliter-type {
+    margin-top: 5px;
+}
+
+.element-container .info-box .extra-info {
+    margin-top: 5px;
+    display: flex;
+    opacity: 0.5;
+}
+
+.element-container .info-box .extra-info .views {
+    margin-right: 5px;
+}
+
+.element-container .info-box .extra-info .reviews {
+    margin-left: 7px;
+    margin-right: 3px;
+}
