@@ -38,6 +38,7 @@
 .element-container .info-box .name-canvas .grade {
     width: 20%;
     color:lightcoral;
+    margin-left: 5px;
 }
 
 .element-container .info-box .fliter-type {

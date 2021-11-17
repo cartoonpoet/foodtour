@@ -5,12 +5,14 @@ import Paging from "../conponents/Paging";
 import dotenv from "dotenv";
 import axios from 'axios';
 import none_img from '../assets/none-img/none-img.jpg';
+import CircularProgress from '@mui/material/CircularProgress';
 
 dotenv.config({ path: "../.env" });
 
 function SearchResult({ match }) {
     const { keyword } = match.params;
     const [searchData, setSearchData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [option, setOption] = useState({
         selectList: ["전체", "음식점", "관광지"],
@@ -22,6 +24,12 @@ function SearchResult({ match }) {
             ...option,
             selectValue: e.target.value
         });
+    };
+
+    const [page, setPage] = useState(1);
+
+    const handlePageChange = (page) => {
+        setPage(page);
     };
 
     useEffect(() => {
@@ -37,7 +45,7 @@ function SearchResult({ match }) {
                 contentTypeId = '';
                 break;
         }
-
+        setIsLoading(true)
         axios.get("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword", {
             params: {
                 serviceKey: process.env.REACT_APP_TOUR_API_DECODING_KEY,
@@ -68,12 +76,16 @@ function SearchResult({ match }) {
                     }
                 }
                 setSearchData([...dataSet]);
+                setIsLoading(false);
             }).catch(function (error) {
                 //오류발생시 실행
             }).then(function () {
                 //항상 실행
             });
     }, [option.selectValue, keyword]);
+
+
+
 
     return (
         <>
@@ -95,7 +107,9 @@ function SearchResult({ match }) {
                         </React.Fragment>
                     ))}
                 </ul>
-                <div>
+                {isLoading ? (<div className="progress-bar">
+                    <CircularProgress color="secondary" />
+                </div>) : (<div>
                     <div className="result-elements">
                         {searchData.map((value, i) => (
                             <React.Fragment key={i}>
@@ -107,8 +121,14 @@ function SearchResult({ match }) {
                             </React.Fragment>
                         ))}
                     </div>
-                    <Paging className="paging" />
-                </div>
+                    <Paging className="paging"
+                        page={page}
+                        totalItemsCount={searchData.length}
+                        handlePageChange={handlePageChange}
+                    />
+                </div>)}
+
+
 
             </div>
         </>
