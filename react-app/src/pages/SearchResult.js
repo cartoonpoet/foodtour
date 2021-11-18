@@ -71,7 +71,7 @@ function SearchResult({ match }) {
                     if (result.response.body.items.item[i].contenttypeid === 12 || result.response.body.items.item[i].contenttypeid === 39) {
                         dataSet.push({
                             firstimage: result.response.body.items.item[i].firstimage !== undefined ? result.response.body.items.item[i].firstimage : none_img,
-                            contentid: result.response.body.items.item[i].contentid,
+                            contentId: result.response.body.items.item[i].contentid,
                             contentTypeId: result.response.body.items.item[i].contenttypeid,
                             title: result.response.body.items.item[i].title
                         });
@@ -81,6 +81,7 @@ function SearchResult({ match }) {
                 setIsLoading(false);
             }).catch(function (error) {
                 //오류발생시 실행
+                console.log(error.request);
             }).then(function () {
                 //항상 실행
             });
