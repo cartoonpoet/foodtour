@@ -1,0 +1,10 @@
+.mySwiper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.swiper-img-size-fix {
+    width: 100%;
+    height: auto;
+}
