@@ -12,9 +12,28 @@ import { BsFillEyeFill, BsFillPencilFill } from "react-icons/bs";
 import Map from '../components/Map';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
-import { common } from "@mui/material/colors";
+import ReactWordcloud from 'react-wordcloud';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale.css';
 
 SwiperCore.use([Pagination, Navigation]);
+
+
+const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: true,
+    deterministic: false,
+    fontFamily: "impact",
+    fontSizes: [5, 50],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    rotations: 3,
+    rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000
+};
 
 function DetailInfo({ location }) {
     const query = queryString.parse(location.search);
@@ -67,6 +86,54 @@ function DetailInfo({ location }) {
         treatmenu: null, //취급 메뉴
         lcnsno: null //인허가번호
     });
+
+    const words = [
+        {
+            text: '맛있다',
+            value: 1,
+        },
+        {
+            text: '뷰가 죽여줘요',
+            value: 2,
+        },
+        {
+            text: '여기가 찐 맛집',
+            value: 3,
+        },
+        {
+            text: '인스타맛집',
+            value: 10,
+        },
+        {
+            text: '1fsadfsda',
+            value: 4,
+        },
+        {
+            text: '2fsdaf',
+            value: 4,
+        },
+        {
+            text: 'fsdafsdafs',
+            value: 4,
+        },
+        {
+            text: 'fa',
+            value: 4,
+        },
+        {
+            text: 'fsdafsa',
+            value: 4,
+        },
+        {
+            text: 'wwq',
+            value: 4,
+        },
+        {
+            text: 'sdagasgg',
+            value: 4,
+        },
+
+    ]
 
     useEffect(() => {
         const getCommonInfo = () => {
@@ -291,7 +358,14 @@ function DetailInfo({ location }) {
 
                         {commonData.lcnsno && <><li className="info-type-name">인허가번호</li>
                             <li className="detail-info">{commonData.lcnsno}</li></>}
+
+                        <div className="wordcloud">
+                            <ReactWordcloud options={options} words={words} />
+                        </div>
                     </ul>
+                </div>
+                <div className="review" >
+                    dsfds
                 </div>
             </div>
             }

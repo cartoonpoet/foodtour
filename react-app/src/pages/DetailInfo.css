@@ -89,3 +89,16 @@
     align-items: center;
     height: 300px;
 }
+
+.wordcloud {
+    width: 70%;
+    height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-border-radius: 70%;
+    -moz-border-radius: 70%;
+    border: 1px solid #ccc;
+}
