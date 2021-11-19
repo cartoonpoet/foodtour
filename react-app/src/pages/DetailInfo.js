@@ -38,7 +38,7 @@ const options = {
 function DetailInfo({ location }) {
     const query = queryString.parse(location.search);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(query);
+    // console.log(query);
     const [commonData, setCommonData] = useState({
         //공통데이터
         title: null,
@@ -198,7 +198,7 @@ function DetailInfo({ location }) {
 
                 let allData = { ...commonResp, ...IntroResp };
                 allData.images = ImageResp;
-                console.log(allData.images)
+
                 setCommonData(allData);
 
                 setIsLoading(false);
@@ -226,10 +226,20 @@ function DetailInfo({ location }) {
 
     const imageRendering = () => {
         const result = [];
-        for (let i = 0; i < commonData.images.length; i++) {
+
+        if (commonData.images.length != null) {
+            for (let i = 0; i < commonData.images.length; i++) {
+                result.push(
+                    <SwiperSlide key={commonData.images[i].serialnum}>
+                        <img src={commonData.images[i].originimgurl} alt="none" className="swiper-img-size-fix" />
+                    </SwiperSlide>
+                );
+            }
+        }
+        else {
             result.push(
-                <SwiperSlide key={commonData.images[i].serialnum}>
-                    <img src={commonData.images[i].originimgurl} alt="none" className="swiper-img-size-fix" />
+                <SwiperSlide key={commonData.images.serialnum}>
+                    <img src={commonData.images.originimgurl} alt="none" className="swiper-img-size-fix" />
                 </SwiperSlide>
             );
         }
@@ -368,8 +378,14 @@ function DetailInfo({ location }) {
                         </div>
                     </ul>
                 </div>
-                <div className="review" >
-                    dsfds
+                <div className="review-container" >
+                    dsfdsrtetretre
+                    tre
+                    tre
+                    tre
+                    tre
+                    tre
+                    E
                 </div>
             </div>
             }
