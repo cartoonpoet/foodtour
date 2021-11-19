@@ -220,6 +220,10 @@ function DetailInfo({ location }) {
         return { __html: commonData.usetime };
     }
 
+    const tourexpguide = () => {
+        return { __html: commonData.expguide };
+    }
+
     const imageRendering = () => {
         const result = [];
         for (let i = 0; i < commonData.images.length; i++) {
@@ -293,7 +297,7 @@ function DetailInfo({ location }) {
                             <li className="detail-info">{commonData.expagerange}</li></>}
 
                         {commonData.expguide && <><li className="info-type-name">체험안내</li>
-                            <li className="detail-info">{commonData.expguide}</li></>}
+                            <li className="detail-info"><div dangerouslySetInnerHTML={tourexpguide()} /></li></>}
 
                         {commonData.infocenter && <><li className="info-type-name">문의 및 안내</li>
                             <li className="detail-info">{commonData.infocenter}</li></>}
