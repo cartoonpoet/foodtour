@@ -11,10 +11,14 @@ function Map(props) {
             center: new window.kakao.maps.LatLng(parseFloat(props.mapy), parseFloat(props.mapx)), //지도의 중심좌표.
             level: 3, //지도의 레벨(확대, 축소 정도)
         };
-
+        const imageSrc = 'http://pngimg.com/uploads/gps/gps_PNG66.png',
+            imageSize = new window.kakao.maps.Size(64, 64),
+            imageOption = { offset: new window.kakao.maps.Point(27, 69) };
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
         const map = new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
         let marker = new window.kakao.maps.Marker({
-            position: new window.kakao.maps.LatLng(parseFloat(props.mapy), parseFloat(props.mapx))
+            position: new window.kakao.maps.LatLng(parseFloat(props.mapy), parseFloat(props.mapx)),
+            image: markerImage
         });
         marker.setMap(map);
         return () => { };
