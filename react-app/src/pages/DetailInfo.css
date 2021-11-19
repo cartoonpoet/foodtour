@@ -12,7 +12,6 @@
 .detail-info-container {
     width: 1200px;
     margin: 0 auto;
-    padding-top: 50px;
     border: 1px solid #ccc;
 }
 
@@ -74,6 +73,7 @@
 
 .detail-info-container .text-info-box .info-type-name {
     font-weight: bold;
+    margin-top: 30px;
     margin-bottom: 10px;
 }
 

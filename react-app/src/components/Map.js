@@ -1,27 +1,30 @@
-import React, { useEffect } from 'react';
-import cn from "classnames";
+import React, { useRef, useEffect } from "react";
 
+const options = {
+    //지도를 생성할 때 필요한 기본 옵션
+    center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+    level: 3, //지도의 레벨(확대, 축소 정도)
+};
 
-const Map = () => {
+function Map() {
+    const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
+
     useEffect(() => {
-        let container = document.getElementById("map");
-
-        let options = {
-            center: new window.kakao.maps.LatLng(35.85133, 127.734086),
-            level: 13,
-        };
-
-        let map = new window.kakao.maps.Map(container, options);
-
-        console.log("loading kakaomap");
+        const map = new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
+        let marker = new window.kakao.maps.Marker({
+            position: new window.kakao.maps.LatLng(33.450701, 126.570667)
+        });
+        marker.setMap(map);
+        return () => { };
     }, []);
 
     return (
-        <div className={cn("Map")}>
-            <div className={cn("MapContainer")} id="map">
-            </div>
-        </div>
+        <div
+            className="map"
+            style={{ width: "90%", height: "300px", margin: "0 auto" }}
+            ref={container}
+        ></div>
     );
-};
+}
 
 export default Map;
