@@ -210,6 +210,47 @@ function DetailInfo({ location }) {
 
                         {commonData.homepage && <><li className="info-type-name">홈페이지</li>
                             <li className="detail-info"><div dangerouslySetInnerHTML={homepage()} /></li></>}
+
+
+                        {/* 관광지 정보들 */}
+                        {commonData.accomcount && <><li className="info-type-name">수용인원</li>
+                            <li className="detail-info">{commonData.accomcount}</li></>}
+
+                        {commonData.chkbabycarriage && <><li className="info-type-name">유모차대여 정보</li>
+                            <li className="detail-info">{commonData.chkbabycarriage}</li></>}
+
+                        {commonData.chkcreditcard && <><li className="info-type-name">신용카드가능 정보</li>
+                            <li className="detail-info">{commonData.chkcreditcard}</li></>}
+
+                        {commonData.chkpet && <><li className="info-type-name">애완동물동반가능 정보</li>
+                            <li className="detail-info">{commonData.chkpet}</li></>}
+
+                        {commonData.expagerange && <><li className="info-type-name">체험가능 연령</li>
+                            <li className="detail-info">{commonData.expagerange}</li></>}
+
+                        {commonData.expguide && <><li className="info-type-name">체험안내</li>
+                            <li className="detail-info">{commonData.expguide}</li></>}
+
+                        {commonData.infocenter && <><li className="info-type-name">문의 및 안내</li>
+                            <li className="detail-info">{commonData.infocenter}</li></>}
+
+                        {commonData.opendate && <><li className="info-type-name">개장일</li>
+                            <li className="detail-info">{commonData.opendate}</li></>}
+
+                        {commonData.parking && <><li className="info-type-name">주차시설</li>
+                            <li className="detail-info">{commonData.parking}</li></>}
+
+                        {commonData.restdate && <><li className="info-type-name">쉬는날</li>
+                            <li className="detail-info">{commonData.restdate}</li></>}
+
+                        {commonData.useseason && <><li className="info-type-name">이용시기</li>
+                            <li className="detail-info">{commonData.useseason}</li></>}
+
+                        {commonData.usetime && <><li className="info-type-name">이용시간</li>
+                            <li className="detail-info">{commonData.usetime}</li></>}
+
+                        {/* 음식점 정보들 */}
+
                     </ul>
 
                 </div>
