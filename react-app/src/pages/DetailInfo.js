@@ -149,6 +149,10 @@ function DetailInfo({ location }) {
         return { __html: commonData.homepage };
     }
 
+    const tourusetime = () => {
+        return { __html: commonData.usetime };
+    }
+
     const imageRendering = () => {
         const result = [];
         for (let i = 0; i < commonData.images.length; i++) {
@@ -247,12 +251,54 @@ function DetailInfo({ location }) {
                             <li className="detail-info">{commonData.useseason}</li></>}
 
                         {commonData.usetime && <><li className="info-type-name">이용시간</li>
-                            <li className="detail-info">{commonData.usetime}</li></>}
+                            <li className="detail-info"><div dangerouslySetInnerHTML={tourusetime()} /></li></>}
 
                         {/* 음식점 정보들 */}
+                        {commonData.chkcreditcardfood && <><li className="info-type-name">신용카드가능 정보</li>
+                            <li className="detail-info">{commonData.chkcreditcardfood}</li></>}
 
+                        {commonData.discountinfofood && <><li className="info-type-name">할인 정보</li>
+                            <li className="detail-info">{commonData.discountinfofood}</li></>}
+
+                        {commonData.firstmenu && <><li className="info-type-name">대표 메뉴</li>
+                            <li className="detail-info">{commonData.firstmenu}</li></>}
+
+                        {commonData.infocenterfood && <><li className="info-type-name">문의 및 안내</li>
+                            <li className="detail-info">{commonData.infocenterfood}</li></>}
+
+                        {commonData.opendatefood && <><li className="info-type-name">개업일</li>
+                            <li className="detail-info">{commonData.opendatefood}</li></>}
+
+                        {commonData.opentimefood && <><li className="info-type-name">영업시간</li>
+                            <li className="detail-info">{commonData.opentimefood}</li></>}
+
+                        {commonData.packing && <><li className="info-type-name">포장 가능</li>
+                            <li className="detail-info">{commonData.packing}</li></>}
+
+                        {commonData.parkingfood && <><li className="info-type-name">주차시설</li>
+                            <li className="detail-info">{commonData.parkingfood}</li></>}
+
+                        {commonData.reservationfood && <><li className="info-type-name">예약안내</li>
+                            <li className="detail-info">{commonData.reservationfood}</li></>}
+
+                        {commonData.restdatefood && <><li className="info-type-name">쉬는날</li>
+                            <li className="detail-info">{commonData.restdatefood}</li></>}
+
+                        {commonData.scalefood && <><li className="info-type-name">규모</li>
+                            <li className="detail-info">{commonData.scalefood}</li></>}
+
+                        {commonData.seat && <><li className="info-type-name">좌석수</li>
+                            <li className="detail-info">{commonData.seat}</li></>}
+
+                        {commonData.smoking && <><li className="info-type-name">금연/흡연 여부</li>
+                            <li className="detail-info">{commonData.smoking}</li></>}
+
+                        {commonData.treatmenu && <><li className="info-type-name">취급 메뉴</li>
+                            <li className="detail-info">{commonData.treatmenu}</li></>}
+
+                        {commonData.lcnsno && <><li className="info-type-name">인허가번호</li>
+                            <li className="detail-info">{commonData.lcnsno}</li></>}
                     </ul>
-
                 </div>
             </div>
             }
