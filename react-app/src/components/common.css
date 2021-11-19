@@ -1,10 +1,10 @@
-@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+@import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css');
 
 
 *{
     margin: 0;
     padding: 0;
-    font-family: 'NanumSquare', sans-serif;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 body, html{
     font-size: 12px;

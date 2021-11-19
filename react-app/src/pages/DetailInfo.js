@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./DetailInfo.css";
 import queryString from "query-string";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,25 +10,171 @@ import SwiperCore, {
 } from 'swiper';
 import { BsFillEyeFill, BsFillPencilFill } from "react-icons/bs";
 import Map from '../components/Map';
-
+import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+import { common } from "@mui/material/colors";
 
 SwiperCore.use([Pagination, Navigation]);
 
 function DetailInfo({ location }) {
     const query = queryString.parse(location.search);
+    const [isLoading, setIsLoading] = useState(false);
     console.log(query);
+    const [commonData, setCommonData] = useState({
+        //공통데이터
+        title: null,
+        homepage: null,
+        mapx: null,
+        mapy: null,
+        addr: null,
+        zipcode: null,
+        overview: null,
+
+        //이미지 데이터
+        images: null,
+
+        //관광지 데이터
+        accomcount: null, //수용인원
+        chkbabycarriage: null, //유모차대여 정보
+        chkcreditcard: null, //신용카드가능 정보
+        chkpet: null, //애완동물동반가능 정보
+        expagerange: null, //체험가능 연령
+        expguide: null, //체험안내
+        heritage1: null, //세계 문화유산 유무
+        heritage2: null, //세계 자연유산 유무
+        heritage3: null, //세계 기록유산 유무
+        infocenter: null, //문의 및 안내
+        opendate: null, //개장일
+        parking: null, //주차시설
+        restdate: null, //쉬는날
+        useseason: null, //이용시기
+        usetime: null, //이용시간
+
+        //음식점 데이터
+        discountinfofood: null, //할인정보
+        firstmenu: null, //대표메뉴
+        infocenterfood: null, //문의 및 안내
+        kidsfacility: null, //어린이 놀이방 여부
+        opendatefood: null, //개업일
+        opentimefood: null, //영업시간
+        packing: null, //포장 가능
+        parkingfood: null, //주차시설
+        reservationfood: null, //예약안내
+        restdatefood: null, //쉬는날
+        scalefood: null, //규모
+        seat: null, //좌석수
+        smoking: null, //금연/흡연 여부
+        treatmenu: null, //취급 메뉴
+        lcnsno: null //인허가번호
+    });
 
     useEffect(() => {
+        const getCommonInfo = () => {
+            return axios.get('http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon', {
+                params: {
+                    'ServiceKey': process.env.REACT_APP_TOUR_API_DECODING_KEY,
+                    'numOfRows': 10,
+                    'pageNo': 1,
+                    'MobileOS': "ETC",
+                    'MobileApp': "AppTest",
+                    'contentId': query.contentid,
+                    'contentTypeId': query.contenttypeid,
+                    'defaultYN': 'Y',
+                    'firstImageYN': 'N',
+                    'areacodeYN': 'N',
+                    'catcodeYN': 'N',
+                    'addrinfoYN': 'Y',
+                    'mapinfoYN': 'Y',
+                    'overviewYN': 'Y',
+                    '_type': "json"
+                }
+            });
+        };
 
-    })
+        const getImageInfo = () => {
+            return axios.get('http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage', {
+                params: {
+                    'ServiceKey': process.env.REACT_APP_TOUR_API_DECODING_KEY,
+                    'numOfRows': 100,
+                    'pageNo': 1,
+                    'MobileOS': "ETC",
+                    'MobileApp': "AppTest",
+                    'contentId': query.contentid,
+                    'imageYN': 'Y',
+                    'subImageYN': 'Y',
+                    '_type': "json"
+                }
+            });
+        };
+
+        const getIntroInfo = () => {
+            return axios.get('http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro', {
+                params: {
+                    'ServiceKey': process.env.REACT_APP_TOUR_API_DECODING_KEY,
+                    'numOfRows': 10,
+                    'pageNo': 1,
+                    'MobileOS': "ETC",
+                    'MobileApp': "AppTest",
+                    'contentId': query.contentid,
+                    'contentTypeId': query.contenttypeid,
+                    '_type': "json"
+                }
+            });
+        };
+        setIsLoading(true);
+        setCommonData({});
+        axios.all([getCommonInfo(), getImageInfo(), getIntroInfo()])
+            .then(axios.spread((commonResp, ImageResp, IntroResp) => {
+                commonResp = commonResp.data.response.body.items.item;
+                ImageResp = ImageResp.data.response.body.items.item;
+                IntroResp = IntroResp.data.response.body.items.item;
+
+                let allData = { ...commonResp, ...IntroResp };
+                allData.images = ImageResp;
+                console.log(allData.images)
+                setCommonData(allData);
+
+                setIsLoading(false);
+            })).catch((error) => {
+                console.log(error);
+                alert(error);
+            });
+    }, [query.contentid, query.contenttypeid]);
+
+    const overview = () => {
+        return { __html: commonData.overview };
+    };
+
+    const homepage = () => {
+        return { __html: commonData.homepage };
+    }
+
+    const imageRendering = () => {
+        const result = [];
+        for (let i = 0; i < commonData.images.length; i++) {
+            result.push(
+                <React.Fragment key={commonData.images[i].originimgurl}>
+                    <SwiperSlide>
+                        <img src={commonData.images[i].originimgurl} alt="none" className="swiper-img-size-fix" />
+                    </SwiperSlide>
+                </React.Fragment>
+            );
+        }
+
+        return result;
+    }
 
     return (
         <>
             <hr className="top-line" />
 
-            <ul className="title-box">
+            {isLoading && <div className="detailinfo-loading-bar">
+                <CircularProgress color="secondary" />
+            </div>}
+
+            {!isLoading && <div><ul className="title-box">
                 <li className="type">{query.contenttypeid === "12" ? "관광지" : "음식점"}</li>
-                <li className="title">월드컵공원</li>
+                <li className="title">{commonData.title}</li>
                 <li className="extra-info-box">
                     <BsFillEyeFill />
                     <span className="views">117,495</span>
@@ -37,32 +183,38 @@ function DetailInfo({ location }) {
                 </li>
             </ul>
 
-            <Swiper slidesPerView={5} spaceBetween={10} slidesPerGroup={1} loop={true} loopFillGroupWithBlank={true} pagination={{
-                "clickable": true
-            }} navigation={true} className="mySwiper">
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/44/2680844_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/42/2680842_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/43/2680843_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/37/2680837_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/40/2680840_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/41/2680841_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/39/2680839_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/38/2680838_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-                <SwiperSlide><img src="http://tong.visitkorea.or.kr/cms/resource/35/2680835_image2_1.jpg" alt="none" className="swiper-img-size-fix" /></SwiperSlide>
-            </Swiper>
+                {commonData.images && <Swiper slidesPerView={3} spaceBetween={10} slidesPerGroup={1} loop={true} loopFillGroupWithBlank={true} pagination={{
+                    "clickable": true
+                }} navigation={true} className="mySwiper">
+                    {imageRendering()}
+                    {/* {commonData.images.map((value, index) => (
+                        <React.Fragment key={value.id}>
 
-            <div className="detail-info-container">
-                <ul className="text-info-box">
-                    <li className="info-type-name">소개</li>
-                    <li className="detail-info">* 코로나-19 감염 및 확산을 방지하고자 경복궁 및 칠공 '해설관람' 별도 공지시까지 잠정중지 경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 '북궐'이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.<br /><br />* 주요문화재 <br />1) 사적 경복궁<br />2) 국보 경복궁 근정전<br />3) 국보 경복궁 경회루<br />4) 보물 경복궁 자경전<br />5) 보물 경복궁 자경전 십장생 굴뚝<br />6) 보물 경복궁 아미산굴뚝<br />7) 보물 경복궁 근정문 및 행각<br />8) 보물 경복궁 풍기대<br /></li>
-                    <li className="info-type-name">주소</li>
-                    <li className="detail-info">서울특별시 종로구 사직로 161</li>
-                    <Map />
-                    <li className="info-type-name">홈페이지</li>
-                    <li className="detail-info">경복궁 <a href="http://www.royalpalace.go.kr/" target="_blank" title="새창 : 경복궁 홈페이지로 이동" rel="noreferrer">http://www.royalpalace.go.kr</a></li>
-                </ul>
+                        </React.Fragment>
+                    ))} */}
+                </Swiper>}
 
+                <div className="detail-info-container">
+                    <ul className="text-info-box">
+                        {commonData.overview && <>
+                            <li className="info-type-name">소개</li>
+                            <li className="detail-info"><div dangerouslySetInnerHTML={overview()} /></li></>}
+
+                        {commonData.zipcode && <><li className="info-type-name">우편번호</li>
+                            <li className="detail-info">{commonData.zipcode}</li></>}
+
+                        {commonData.addr1 && <><li className="info-type-name">주소</li>
+                            <li className="detail-info">{commonData.addr1}</li></>}
+
+                        <Map mapx={commonData.mapx} mapy={commonData.mapy} />
+
+                        {commonData.homepage && <><li className="info-type-name">홈페이지</li>
+                            <li className="detail-info"><div dangerouslySetInnerHTML={homepage()} /></li></>}
+                    </ul>
+
+                </div>
             </div>
+            }
         </>
     );
 }

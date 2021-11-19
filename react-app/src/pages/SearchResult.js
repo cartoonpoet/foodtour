@@ -96,7 +96,7 @@ function SearchResult({ match }) {
             if (page !== Math.ceil(searchData.length / 20)) {
                 for (let i = (page - 1) * 20; i < searchData.length - (searchData.length / 20 - page) * 20; i++) {
                     result.push(
-                        <React.Fragment key={i}>
+                        <React.Fragment key={searchData[i].contentId}>
                             <Element
                                 firstImage={searchData[i].firstimage}
                                 title={searchData[i].title}
@@ -110,7 +110,7 @@ function SearchResult({ match }) {
             else {
                 for (let i = (page - 1) * 20; i < searchData.length; i++) {
                     result.push(
-                        <React.Fragment key={i}>
+                        <React.Fragment key={searchData[i].contentId}>
                             <Element
                                 firstImage={searchData[i].firstimage}
                                 title={searchData[i].title}
@@ -132,7 +132,7 @@ function SearchResult({ match }) {
             <div className="content-container">
                 <ul className="filter-box">
                     {option.selectList.map((value, i) => (
-                        <React.Fragment key={i}>
+                        <React.Fragment key={value}>
                             <input type="radio"
                                 onChange={optionChange}
                                 value={value}
