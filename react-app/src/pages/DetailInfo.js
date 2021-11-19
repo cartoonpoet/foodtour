@@ -15,9 +15,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ReactWordcloud from 'react-wordcloud';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
+import NoneDataAlert from '../components/NoneDataAlert';
 
 SwiperCore.use([Pagination, Navigation]);
-
 
 const options = {
     colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
@@ -255,16 +255,17 @@ function DetailInfo({ location }) {
                 <CircularProgress color="secondary" />
             </div>}
 
-            {!isLoading && <div><ul className="title-box">
-                <li className="type">{query.contenttypeid === "12" ? "관광지" : "음식점"}</li>
-                <li className="title">{commonData.title}</li>
-                <li className="extra-info-box">
-                    <BsFillEyeFill />
-                    <span className="views">117,495</span>
-                    <BsFillPencilFill />
-                    <span className="reviews">41</span>
-                </li>
-            </ul>
+            {!isLoading && commonData.title != null && <div>
+                <ul className="title-box">
+                    <li className="type">{query.contenttypeid === "12" ? "관광지" : "음식점"}</li>
+                    <li className="title">{commonData.title}</li>
+                    <li className="extra-info-box">
+                        <BsFillEyeFill />
+                        <span className="views">117,495</span>
+                        <BsFillPencilFill />
+                        <span className="reviews">41</span>
+                    </li>
+                </ul>
 
                 {commonData.images && <Swiper slidesPerView={3} spaceBetween={10} slidesPerGroup={1} loop={true} loopFillGroupWithBlank={true} pagination={{
                     "clickable": true
@@ -389,6 +390,8 @@ function DetailInfo({ location }) {
                 </div>
             </div>
             }
+
+            {!isLoading && commonData.title == null && <NoneDataAlert message="존재하지 않는 정보입니다." />}
         </>
     );
 }

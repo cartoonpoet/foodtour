@@ -52,11 +52,3 @@
     display: block;
 }
 
-.content-container .no-data-alert {
-    display: flex;
-    justify-content: center;
-    height: 400px;
-    align-items: center;
-    font-size: 5rem;
-    opacity: 0.3;
-}
