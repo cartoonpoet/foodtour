@@ -3,9 +3,9 @@ import React from "react";
 import Slider from "./pages/Slider";
 import SearchResult from "./pages/SearchResult";
 import DetailInfo from "./pages/DetailInfo";
-import TopNav from "./conponents/TopNav";
-import SearchBar from "./conponents/SearchBar";
-import './conponents/common.css';
+import TopNav from "./components/TopNav";
+import SearchBar from "./components/SearchBar";
+import './components/common.css';
 
 function App() {
   return (

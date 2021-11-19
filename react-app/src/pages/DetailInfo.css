@@ -12,10 +12,7 @@
 .detail-info-container {
     width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 40px;
+    padding-top: 50px;
     border: 1px solid #ccc;
 }
 
@@ -32,7 +29,6 @@
     font-weight: bold;
     color: rgb(74, 101, 255);
     font-size: 1.5rem;
-
 }
 
 .title-box .title {
@@ -68,4 +64,20 @@
     line-height: 0px;
     margin: 0px 16px;
     opacity: 0.5;
+}
+
+.detail-info-container .text-info-box {
+    font-size: 1.5rem;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.detail-info-container .text-info-box .info-type-name {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.detail-info-container .text-info-box .detail-info {
+    margin-bottom: 30px;
+    width: 100%;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SearchResult.css";
-import Element from "../conponents/Element";
-import Paging from "../conponents/Paging";
+import Element from "../components/Element";
+import Paging from "../components/Paging";
 import dotenv from "dotenv";
 import axios from 'axios';
 import none_img from '../assets/none-img/none-img.jpg';
