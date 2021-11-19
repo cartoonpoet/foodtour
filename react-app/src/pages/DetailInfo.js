@@ -157,11 +157,9 @@ function DetailInfo({ location }) {
         const result = [];
         for (let i = 0; i < commonData.images.length; i++) {
             result.push(
-                <React.Fragment key={commonData.images[i].originimgurl}>
-                    <SwiperSlide>
-                        <img src={commonData.images[i].originimgurl} alt="none" className="swiper-img-size-fix" />
-                    </SwiperSlide>
-                </React.Fragment>
+                <SwiperSlide key={commonData.images[i].serialnum}>
+                    <img src={commonData.images[i].originimgurl} alt="none" className="swiper-img-size-fix" />
+                </SwiperSlide>
             );
         }
 
@@ -191,11 +189,6 @@ function DetailInfo({ location }) {
                     "clickable": true
                 }} navigation={true} className="mySwiper">
                     {imageRendering()}
-                    {/* {commonData.images.map((value, index) => (
-                        <React.Fragment key={value.id}>
-
-                        </React.Fragment>
-                    ))} */}
                 </Swiper>}
 
                 <div className="detail-info-container">

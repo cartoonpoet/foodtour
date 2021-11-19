@@ -22,7 +22,6 @@ function Slider() {
             >
                 <SwiperSlide>
                     <img src="assets/slider-img/slider1.gif" alt="slider1 img is not" />
-
                 </SwiperSlide>
                 <SwiperSlide><img src="assets/slider-img/slider2.png" alt="slider2 img is not" /></SwiperSlide>
                 <SwiperSlide><img src="assets/slider-img/slider3.png" alt="slider3 img is not" /></SwiperSlide>
