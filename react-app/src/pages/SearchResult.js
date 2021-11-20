@@ -64,6 +64,7 @@ function SearchResult({ match }) {
         })
             .then(function (response) {
                 //response
+                // console.log(JSON.stringify(response));
                 const result = response.data;
                 // console.log("total : " + result.response.body.totalCount);
                 let dataSet = [];

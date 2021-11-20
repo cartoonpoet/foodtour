@@ -12,7 +12,6 @@
 .detail-info-container {
     width: 1200px;
     margin: 0 auto;
-    border: 1px solid #ccc;
 }
 
 .title-box {
@@ -100,14 +99,18 @@
     justify-content: center;
     -webkit-border-radius: 70%;
     -moz-border-radius: 70%;
-    border: 1px solid #ccc;
 }
 
 .review-container {
     width: 1200px; 
     display: block;
     margin: 0 auto;
-    padding: 100px 0;
     overflow: hidden;
-    background-color: #ccc;
+    border-top: 1px solid #ccc;
+    padding-top: 50px;
+}
+
+.review-container>.review-title {
+    font-size: 2rem;
+    font-weight: bold;
 }

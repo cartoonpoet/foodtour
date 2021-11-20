@@ -1,0 +1,101 @@
+.review-box {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.review-box>.user-info {
+    display: flex;
+    font-size: 1.5rem;
+    padding-top: 5px;
+
+}
+
+.review-box>.user-info>img {
+    width: 100px;
+    height: 100px;
+    border-radius: 70%;
+    object-fit: cover;
+}
+
+.review-box>.user-info>.top-box {
+    display: flex;
+    padding-top: 10px;
+    padding-left: 10px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+}
+.review-box>.user-info>.top-box .nickname {
+    font-weight: bold;
+    display: inline;
+}
+
+.review-box>.user-info>.top-box .register-date{
+    color: rgb(80, 80, 80);
+    margin-left: 15px;
+    opacity: 0.7;
+    display: inline;
+}
+.review-box>.user-info>.top-box .con {
+    display: block;
+    width: 100%;
+}
+
+.review-box>.user-info>.top-box .remove {
+    cursor: pointer;
+    display: inline;
+    float: right;
+    margin-right: 10px;
+    color: #ccc;
+}
+
+.review-box>.user-info>.top-box .change {
+    cursor: pointer;
+    display: inline;
+    float: right;
+    color: #ccc;
+}
+
+.review-box>.user-info>.top-box>.rating {
+    font-size: 2rem;
+    margin-top: -20px;
+}
+
+.review-box .content {
+    width: 100%;
+    font-size: 1.4rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.review-box .imgs {
+    width: 100%;
+}
+
+.review-box .imgs>img {
+    width: 150px;
+    height: 100px;
+    cursor: pointer;
+    margin-left: 5px;
+    object-fit: cover;
+}
+
+.review-box .tags {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.review-box .tags .hashtag {
+    background-color: #e6e6eb;
+    color: #66666e;
+    padding: 0px 8px;
+    display: inline-block;
+    border-radius: 20px;
+    font-size: 11px;
+    line-height: 20px;
+}

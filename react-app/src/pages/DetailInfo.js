@@ -16,6 +16,7 @@ import ReactWordcloud from 'react-wordcloud';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 import NoneDataAlert from '../components/NoneDataAlert';
+import Review from '../components/Review';
 
 SwiperCore.use([Pagination, Navigation]);
 
@@ -380,13 +381,8 @@ function DetailInfo({ location }) {
                     </ul>
                 </div>
                 <div className="review-container" >
-                    dsfdsrtetretre
-                    tre
-                    tre
-                    tre
-                    tre
-                    tre
-                    E
+                    <div className="review-title">리뷰 (32)</div>
+                    <Review/>
                 </div>
             </div>
             }
