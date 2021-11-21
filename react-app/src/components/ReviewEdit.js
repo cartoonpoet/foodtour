@@ -38,7 +38,14 @@ function ReviewEdit() {
 
   const onLoadFile = (e) => {
     const file = e.target.files;
-    console.log(file);
+    setData({ ...data, imgs: data.imgs.concat(file) });
+  };
+
+  const imgDelete = (i) => {
+    setData({
+      ...data,
+      imgs: data.imgs.filter((value, index) => index !== i.index),
+    });
   };
 
   return (
@@ -51,6 +58,16 @@ function ReviewEdit() {
           style={{ display: "none" }}
           onChange={onLoadFile}
         />
+        {data.imgs.map((value, index) => (
+          <React.Fragment key={index}>
+            <img
+              alt="none img"
+              src={URL.createObjectURL(value[0])}
+              className="img-preview"
+              onClick={(e) => imgDelete({ index })}
+            />
+          </React.Fragment>
+        ))}
         <label htmlFor="img-upload" className="img-upload-btn">
           사진 업로드
         </label>
@@ -74,6 +91,7 @@ function ReviewEdit() {
           handleAddition={handleAddition}
           inputFieldPosition="top"
           className="tag-input"
+          autofocus={false}
         />
       </div>
 
