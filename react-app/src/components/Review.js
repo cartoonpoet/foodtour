@@ -39,8 +39,14 @@ function Review() {
         </div>
         <div className="imgs">
           <img
+            onClick={() =>
+              window.open(
+                "https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E",
+                "_blank"
+              )
+            }
             alt="dfsf"
-            src="https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/300_300_20211116093012_photo2_73858665a3d7.jpg"
+            src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"
           />
           <img
             alt="dfsf"

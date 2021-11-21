@@ -1,0 +1,75 @@
+.review-edit-container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(233, 233, 233, 0.5);
+    padding: 20px;
+}
+
+.review-edit-container .img-upload-box {
+    font-size: 15px;
+}
+
+.review-edit-container .img-upload-box .img-upload-btn {
+    cursor: pointer;
+}
+
+.review-edit-container .contents .editable {
+    background-color: white;
+    padding: 5px 10px;
+    border: 1px solid black;
+    width: 89%;
+    height: 100px;
+    overflow: auto;
+}
+
+.review-edit-container .contents .upload-btn {
+    cursor: pointer;
+    background-color: #303f61;
+    color: white;
+    font-size: 1.4rem;
+    width: 10%;
+    margin-left: 1%;
+    height: 112px;
+}
+
+.review-edit-container .contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.review-edit-container .hashtag-box {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.review-edit-container .hashtag-box .ReactTags__tagInputField{
+    padding: 8px 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+
+.review-edit-container .hashtag-box .ReactTags__selected span.ReactTags__tag {
+    border: 1px solid #ddd;
+    background: #ff7402;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    border-radius: 2px;
+  }
+
+  .review-edit-container .hashtag-box .ReactTags__remove {
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: white;
+    margin-left: 5px;
+  }
