@@ -1,7 +1,7 @@
 import express from 'express';
 import pool from '../mysql';
-// import con from '../mysql';
 import axios from 'axios';
+import Jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
@@ -25,7 +25,8 @@ function createCode(iLength) {
 }
 
 
-userRouter.post('/user/kakao', async function (req, res) {
+userRouter.post('/kakao', async function (req, res) {
+    const conn = await pool.getConnection(async conn => conn);
     try {
         if (!req.body.access_token) {
             res.status(400).json({ message: 'access_token이 필요합니다.' });
@@ -37,17 +38,25 @@ userRouter.post('/user/kakao', async function (req, res) {
         })
         let kakaoData = kakaoRes.data;
 
+        await conn.beginTransaction();
         const sql = 'insert into foodtour.`user` (username, password, email, name, nickname, reg_date, last_login, is_active)'
             + 'VALUES(?, ?, ?, ?, ?, now(), now(), true)'
             + 'ON DUPLICATE KEY UPDATE last_login = now();';
+        const user = await conn.query(sql, [kakaoData.kakao_account.email.split("@")[0], createCode(50), kakaoData.kakao_account.email, "Unknown", kakaoData.properties.nickname]);
 
-        const user = await pool.query(sql, [kakaoData.kakao_account.email.split("@")[0], createCode(50), kakaoData.kakao_account.email, "Unknown", kakaoData.properties.nickname]);
-        console.log(user);
-        // console.log(user);
+        const kakao_user_insert_sql = `insert into social (user_id, social_user_id, social_type_id) 
+        select ?, ?, ? from dual where not exists (select * from social where social_user_id = ?);`;
+        const kakao_user = await conn.query(kakao_user_insert_sql, [user[0].insertId, kakaoData.id, 1, kakaoData.id]);
+        await conn.commit();
+
+        const token = Jwt.sign({
+            data: { social_user_id: kakaoData.id, email: kakaoData.kakao_account.email }
+        }, 'secret', { expiresIn: '5h' });
+
         res.send();
-
     } catch (err) {
         console.log(err.message);
+        await conn.rollback();
         res.status(400).json({ message: '유효하지 않은 access_token' });
     }
 
