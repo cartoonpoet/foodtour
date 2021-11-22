@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import './TopNav.css';
 import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -17,12 +17,15 @@ function bookmark_add() {
     }
 }
 
-
-
 function TopNav() {
     const [modal, setModal] = useState(false);
 
     const onModal = () => setModal(modal => !modal);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    const onRemoveToken = () => {
+        window.localStorage.removeItem("token");
+        forceUpdate();
+    };
 
     return (
         <div className="top-nav">
@@ -31,7 +34,8 @@ function TopNav() {
                 <div className="elements-align v-line">|</div>
                 <span className="elements-align elements" onClick={bookmark_add}>즐겨찾기</span>
                 <span className="elements-align v-line">|</span>
-                <span className="elements-align elements" onClick={onModal}>로그인</span>
+                {!window.localStorage.getItem("token") && <span className="elements-align elements" onClick={onModal}>로그인</span>}
+                {window.localStorage.getItem("token") && <span className="elements-align elements" onClick={onRemoveToken}>로그아웃</span>}
                 {modal && <SignIn onModal={onModal} />}
             </div>
         </div>

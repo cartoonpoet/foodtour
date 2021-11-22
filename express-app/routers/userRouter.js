@@ -25,11 +25,11 @@ function createCode(iLength) {
 }
 
 userRouter.post('/kakao', async function (req, res) {
+    if (!req.body.access_token) {
+        res.status(400).json({ message: 'access_token이 필요합니다.' });
+    }
     const conn = await pool.getConnection(async conn => conn);
     try {
-        if (!req.body.access_token) {
-            res.status(400).json({ message: 'access_token이 필요합니다.' });
-        }
         const kakaoRes = await axios.get("https://kapi.kakao.com/v2/user/me", {
             headers: {
                 Authorization: `Bearer ${req.body.access_token}`
@@ -47,7 +47,7 @@ userRouter.post('/kakao', async function (req, res) {
         select ?, ?, ? from dual where not exists (select * from social where social_user_id = ?);`;
         const kakao_user = await conn.query(kakao_user_insert_sql, [user[0].insertId, kakaoData.id, 1, kakaoData.id]);
         await conn.commit();
-
+        conn.release();
         const token = Jwt.sign({
             data: { social_user_id: kakaoData.id, email: kakaoData.kakao_account.email }
         }, 'secret', { expiresIn: '5h' });
@@ -56,6 +56,7 @@ userRouter.post('/kakao', async function (req, res) {
     } catch (err) {
         console.log(err.message);
         await conn.rollback();
+        conn.release();
         res.status(400).json({ message: '유효하지 않은 access_token' });
     }
 })
