@@ -49,7 +49,7 @@ userRouter.post('/kakao', async function (req, res) {
         await conn.commit();
         conn.release();
         const token = Jwt.sign({
-            data: { social_user_id: kakaoData.id, email: kakaoData.kakao_account.email }
+            data: { user_id: user[0].insertId, social_user_id: kakaoData.id, email: kakaoData.kakao_account.email }
         }, 'secret', { expiresIn: '5h' });
 
         res.json({ id: user[0].insertId, kakao_id: kakaoData.id, message: "로그인 성공", token });

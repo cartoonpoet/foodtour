@@ -15,13 +15,13 @@ function SignIn(props) {
                 axios.post("http://localhost:4000/api/cert/kakao", {
                     access_token: authObj.access_token
                 }).then((res) => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     window.localStorage.setItem("token", res.data.token);
                     props.onModal();
                 });
             },
             fail: function (err) {
-                alert(JSON.stringify(err))
+                alert(JSON.stringify(err));
             },
         })
     };

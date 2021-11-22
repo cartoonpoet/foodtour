@@ -1,5 +1,6 @@
 import express from 'express';
 import userRouter from './routers/userRouter';
+import reviewRouter from './routers/reviewRouter';
 
 const app = express();
 const cors = require('cors');
@@ -12,6 +13,8 @@ app.listen(4000, () => console.log("Listening on port 4000..."));
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/cert', userRouter);
+app.use('/api', reviewRouter);
 
 export default app;
