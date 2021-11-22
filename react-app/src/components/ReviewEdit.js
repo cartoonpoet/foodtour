@@ -51,14 +51,18 @@ function ReviewEdit(props) {
       alert("내용을 입력해주세요");
       return;
     }
-    axios.post("http://localhost:4000/api/review", {
-      imgs: data.imgs,
-      content: data.html,
-      tags: data.tags,
-      grade: data.rating,
-      contentid: props.contentid,
-      contenttypeid: props.contenttypeid,
-      user_id: window.localStorage.getItem("id")
+    let fd = new FormData();
+    fd.append('imgs', data.imgs[0][0]);
+    fd.append('content', data.html);
+    fd.append('tags', data.tags);
+    fd.append('grade', data.rating);
+    fd.append('contentid', props.contentid);
+    fd.append('contenttypeid', props.contenttypeid);
+    fd.append('user_id', window.localStorage.getItem("id"));
+    axios.post("http://localhost:4000/api/review", fd, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
       .then((res) => {
         console.log(res.data);
