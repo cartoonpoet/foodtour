@@ -24,7 +24,6 @@ function createCode(iLength) {
     return randomStr
 }
 
-
 userRouter.post('/kakao', async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
     try {
@@ -53,14 +52,12 @@ userRouter.post('/kakao', async function (req, res) {
             data: { social_user_id: kakaoData.id, email: kakaoData.kakao_account.email }
         }, 'secret', { expiresIn: '5h' });
 
-        res.send();
+        res.json({ id: user[0].insertId, kakao_id: kakaoData.id, message: "로그인 성공", token });
     } catch (err) {
         console.log(err.message);
         await conn.rollback();
         res.status(400).json({ message: '유효하지 않은 access_token' });
     }
-
-
 })
 
 
