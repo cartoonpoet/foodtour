@@ -17,6 +17,8 @@ function SignIn(props) {
                 }).then((res) => {
                     console.log(res.data);
                     window.localStorage.setItem("token", res.data.token);
+                    window.localStorage.setItem("id", res.data.id);
+                    window.localStorage.setItem("kakao_id", res.data.kakao_id);
                     props.onModal();
                 });
             },

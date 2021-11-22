@@ -3,6 +3,7 @@ import Rating from "@mui/material/Rating";
 import ContentEditable from "react-contenteditable";
 import "./ReviewEdit.css";
 import { WithContext as ReactTags } from "react-tag-input";
+import axios from "axios";
 
 const KeyCodes = {
   comma: 188,
@@ -10,12 +11,9 @@ const KeyCodes = {
 };
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-function ReviewEdit() {
+function ReviewEdit(props) {
   const [data, setData] = useState({
-    tags: [
-      { id: "Thailand", text: "Thailand" },
-      { id: "India", text: "India" },
-    ],
+    tags: [],
     html: "",
     rating: Number(0),
     imgs: [],
@@ -48,6 +46,25 @@ function ReviewEdit() {
     });
   };
 
+  const reviewAdd = () => {
+    if (data.html === "") {
+      alert("내용을 입력해주세요");
+      return;
+    }
+    axios.post("http://localhost:4000/api/review", {
+      imgs: data.imgs,
+      content: data.html,
+      tags: data.tags,
+      grade: data.rating,
+      contentid: props.contentid,
+      contenttypeid: props.contenttypeid,
+      user_id: window.localStorage.getItem("id")
+    })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+
   return (
     <div className="review-edit-container">
       <div className="img-upload-box">
@@ -79,7 +96,7 @@ function ReviewEdit() {
           html={data.html}
           onChange={contentsChange}
         />
-        <button className="upload-btn">등록</button>
+        <button className="upload-btn" onClick={reviewAdd}>등록</button>
       </div>
 
       <div className="hashtag-box">

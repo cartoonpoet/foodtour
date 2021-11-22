@@ -548,7 +548,7 @@ function DetailInfo({ location }) {
           </div>
           <div className="review-container">
             <div className="review-title">리뷰 (32)</div>
-            <ReviewEdit />
+            <ReviewEdit contenttypeid={query.contenttypeid} contentid={query.contentid} />
             <Review />
           </div>
         </div>

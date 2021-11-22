@@ -24,6 +24,8 @@ function TopNav() {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const onRemoveToken = () => {
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("id");
+        window.localStorage.removeItem("kakao_id");
         forceUpdate();
     };
 
