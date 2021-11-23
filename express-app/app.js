@@ -14,7 +14,7 @@ app.listen(4000, () => console.log("Listening on port 4000..."));
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.static('image'));
 app.use('/api/cert', userRouter);
 app.use('/api', reviewRouter);
 
