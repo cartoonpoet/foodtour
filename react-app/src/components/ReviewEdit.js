@@ -52,8 +52,10 @@ function ReviewEdit(props) {
       return;
     }
     let fd = new FormData();
-    console.log(data);
-    fd.append('imgs[]', data.imgs);
+
+    for (let i = 0; i < data.imgs.length; i++) {
+      fd.append('imgs[]', data.imgs[i]);
+    }
     fd.append('content', data.html);
     fd.append('tags', JSON.stringify(data.tags));
     fd.append('grade', data.rating);
