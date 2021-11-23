@@ -36,7 +36,7 @@ function ReviewEdit(props) {
 
   const onLoadFile = (e) => {
     const file = e.target.files;
-    setData({ ...data, imgs: data.imgs.concat(file) });
+    setData({ ...data, imgs: data.imgs.concat(file[0]) });
   };
 
   const imgDelete = (i) => {
@@ -52,9 +52,10 @@ function ReviewEdit(props) {
       return;
     }
     let fd = new FormData();
-    fd.append('imgs', data.imgs[0][0]);
+    console.log(data);
+    fd.append('imgs[]', data.imgs);
     fd.append('content', data.html);
-    fd.append('tags', data.tags);
+    fd.append('tags', JSON.stringify(data.tags));
     fd.append('grade', data.rating);
     fd.append('contentid', props.contentid);
     fd.append('contenttypeid', props.contenttypeid);
@@ -83,7 +84,7 @@ function ReviewEdit(props) {
           <React.Fragment key={index}>
             <img
               alt="none img"
-              src={URL.createObjectURL(value[0])}
+              src={URL.createObjectURL(value)}
               className="img-preview"
               onClick={(e) => imgDelete({ index })}
             />

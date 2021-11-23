@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-reviewRouter.post('/review', upload.array("imgs", 5), async function (req, res) {
+reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
     console.log(req.body);
     try {
@@ -32,10 +32,13 @@ reviewRouter.post('/review', upload.array("imgs", 5), async function (req, res) 
 
         const hashtag_sql = `INSERT INTO foodtour.hashtag (review_id, tag_name) VALUES ?;`;
         let hashtag_values = [];
-        for (let i = 0; i < req.body.tags.length; i++) {
-            hashtag_values.push([review[0].insertId, req.body.tags[i].text]);
+        let tags = JSON.parse(req.body.tags);
+        for (let i = 0; i < tags.length; i++) {
+            hashtag_values.push([review[0].insertId, tags[i].text]);
         }
-        const hashtag = await conn.query(hashtag_sql, [hashtag_values]);
+        if (hashtag_values.length > 0) {
+            const hashtag = await conn.query(hashtag_sql, [hashtag_values]);
+        }
 
 
         await conn.commit();
