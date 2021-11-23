@@ -1,6 +1,7 @@
 import express from 'express';
 import pool from '../mysql';
 import multer from 'multer';
+import fs from 'fs';
 
 const reviewRouter = express.Router();
 
@@ -8,9 +9,13 @@ const reviewRouter = express.Router();
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //파일이 이미지 파일이면
+        const { contentid, contenttypeid } = req.body;
         if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png") {
             console.log("이미지 파일이네요")
-            cb(null, 'image/review')
+            console.log(contentid);
+            const path = "image\\review\\" + contenttypeid + "\\" + contentid;
+            fs.mkdirSync(path, { recursive: true });
+            cb(null, path);
         }
     },
     //파일이름 설정
@@ -23,7 +28,9 @@ var upload = multer({ storage: storage });
 
 reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
-    console.log(req.body);
+
+    // console.log(req.body);
+    // console.log(req.files);
     try {
         await conn.beginTransaction();
         const review_sql = `INSERT INTO foodtour.review (user_id, contenttypeid, contentid, content, grade, write_date)

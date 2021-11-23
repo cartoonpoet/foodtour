@@ -35,8 +35,13 @@ function ReviewEdit(props) {
   };
 
   const onLoadFile = (e) => {
-    const file = e.target.files;
-    setData({ ...data, imgs: data.imgs.concat(file[0]) });
+    if (data.imgs.length < 5) {
+      const file = e.target.files;
+      setData({ ...data, imgs: data.imgs.concat(file[0]) });
+    }
+    else {
+      alert("이미지는 최대 5개까지 업로드 가능합니다");
+    }
   };
 
   const imgDelete = (i) => {
@@ -52,16 +57,15 @@ function ReviewEdit(props) {
       return;
     }
     let fd = new FormData();
-
-    for (let i = 0; i < data.imgs.length; i++) {
-      fd.append('imgs[]', data.imgs[i]);
-    }
     fd.append('content', data.html);
     fd.append('tags', JSON.stringify(data.tags));
     fd.append('grade', data.rating);
     fd.append('contentid', props.contentid);
     fd.append('contenttypeid', props.contenttypeid);
     fd.append('user_id', window.localStorage.getItem("id"));
+    for (let i = 0; i < data.imgs.length; i++) {
+      fd.append('imgs[]', data.imgs[i]);
+    }
     axios.post("http://localhost:4000/api/review", fd, {
       headers: {
         'Content-Type': 'multipart/form-data'
