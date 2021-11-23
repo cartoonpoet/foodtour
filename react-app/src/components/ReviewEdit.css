@@ -81,4 +81,5 @@
       object-fit: cover;
       margin: 0 5px;
       cursor: pointer;
+      border: 1px solid #ccc;
   }

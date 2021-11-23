@@ -18,6 +18,9 @@ function ReviewEdit(props) {
     rating: Number(0),
     imgs: [],
   });
+  const [review, setReview] = useState({
+
+  });
 
   const handleDelete = (i) => {
     console.log(data);
@@ -66,6 +69,13 @@ function ReviewEdit(props) {
     for (let i = 0; i < data.imgs.length; i++) {
       fd.append('imgs[]', data.imgs[i]);
     }
+
+    setData({
+      tags: [],
+      html: "",
+      rating: Number(0),
+      imgs: [],
+    });
     axios.post("http://localhost:4000/api/review", fd, {
       headers: {
         'Content-Type': 'multipart/form-data'

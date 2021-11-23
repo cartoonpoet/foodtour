@@ -10,8 +10,7 @@ const storage = multer.diskStorage({
         //파일이 이미지 파일이면
         const { contentid, contenttypeid } = req.body;
         if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png") {
-            console.log("이미지 파일이네요")
-            console.log(contentid);
+            // console.log("이미지 파일이네요")
             const path = "image/review/" + contenttypeid + "/" + contentid;
             fs.mkdirSync(path, { recursive: true });
             cb(null, path);
@@ -28,7 +27,7 @@ var upload = multer({ storage: storage });
 reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
 
-    console.log(req.files);
+    // console.log(req.files);
     try {
         await conn.beginTransaction();
 
@@ -57,9 +56,25 @@ reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res
         if (img_values.length > 0) {
             const review_imgs = await conn.query(file_sql, [img_values]);
         }
+
+        //INSERT한 리뷰 SELECT해서 return
+        const review_select_sql = `SELECT foodtour.review.id as review_id, 
+		                                foodtour.user.nickname, 
+		                                foodtour.user.profile_img, 
+                                        foodtour.review.content, 
+                                        foodtour.review.grade, 
+                                        foodtour.review.write_date,
+                                        GROUP_CONCAT(foodtour.hashtag.tag_name SEPARATOR ',') as tags,
+                                        GROUP_CONCAT(foodtour.review_img.img_path SEPARATOR ',') as imgs_path
+                                    from foodtour.review left join foodtour.user on foodtour.review.user_id = foodtour.user.id
+                                    left join foodtour.hashtag on foodtour.review.id = foodtour.hashtag.review_id 
+                                    left join foodtour.review_img on foodtour.review.id = foodtour.review_img.review_id 
+                                    where foodtour.review.id = ?;`;
+        const reviewData = await conn.query(review_select_sql, [review[0].insertId]);
         await conn.commit();
         conn.release();
-        res.send();
+
+        res.json(reviewData[0][0]);
     } catch (err) {
         console.log(err.message);
         await conn.rollback();
