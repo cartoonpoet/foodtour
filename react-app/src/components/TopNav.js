@@ -21,12 +21,11 @@ function TopNav() {
     const [modal, setModal] = useState(false);
 
     const onModal = () => setModal(modal => !modal);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const onRemoveToken = () => {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("id");
         window.localStorage.removeItem("kakao_id");
-        forceUpdate();
+        window.location.reload();
     };
 
     return (

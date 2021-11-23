@@ -20,6 +20,7 @@ function SignIn(props) {
                     window.localStorage.setItem("id", res.data.id);
                     window.localStorage.setItem("kakao_id", res.data.kakao_id);
                     props.onModal();
+                    window.location.reload();
                 });
             },
             fail: function (err) {

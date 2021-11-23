@@ -52,7 +52,11 @@ function ReviewEdit(props) {
   };
 
   const reviewAdd = () => {
-    if (data.html === "") {
+    if (!window.localStorage.getItem("token")) {
+      alert("로그인 후 이용하실 수 있습니다");
+      return;
+    }
+    else if (data.html === "") {
       alert("내용을 입력해주세요");
       return;
     }
