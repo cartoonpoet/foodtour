@@ -1,6 +1,7 @@
 import React from "react";
 import "./Review.css";
 import Rating from "@mui/material/Rating";
+import axios from "axios";
 
 function Review(props) {
 
@@ -47,6 +48,19 @@ function Review(props) {
     return result;
   }
 
+  const onDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      axios.delete("http://localhost:4000/api/review/" + props.review_id)
+        .then(function (response) {
+          if (response.status === 204) {
+            props.reviewData_Remove(props.index);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+  }
 
   return (
     <>
@@ -61,7 +75,7 @@ function Review(props) {
               <div className="nickname">{props.nickname}</div>
               <div className="register-date">{props.write_date}</div>
               {props.user_id === parseInt(window.localStorage.getItem("id")) && <div className="change">수정</div>}
-              {props.user_id === parseInt(window.localStorage.getItem("id")) && <div className="remove">삭제</div>}
+              {props.user_id === parseInt(window.localStorage.getItem("id")) && <div className="remove" onClick={onDelete}>삭제</div>}
             </div>
             <Rating
               name="read-only"

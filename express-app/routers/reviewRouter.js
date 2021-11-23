@@ -113,5 +113,20 @@ reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res
     }
 });
 
+reviewRouter.delete('/review/:review_id', async function (req, res) {
+    const conn = await pool.getConnection(async conn => conn);
+    try {
+        console.log(req.params);
+
+        const review_delete_sql = `delete from foodtour.review where foodtour.review.id = ?`;
+        const delete_result = await conn.query(review_delete_sql, [req.params.review_id]);
+
+        res.status(204).json(delete_result);
+    } catch (err) {
+        res.status(400).json({ message: 'review_id를 확인해주세요.' });
+    }
+
+});
+
 
 export default reviewRouter;

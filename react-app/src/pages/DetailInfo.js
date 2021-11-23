@@ -294,6 +294,8 @@ function DetailInfo({ location }) {
             write_date={commonData.review[i].write_date}
             user_id={commonData.review[i].user_id}
             imgs_path={commonData.review[i].imgs_path}
+            index={i}
+            reviewData_Remove={reviewData_Remove}
           />
         </React.Fragment>
       );
@@ -304,6 +306,13 @@ function DetailInfo({ location }) {
 
   const reviewData_Add = (review) => {
     setCommonData({ ...commonData, review: [review, ...commonData.review] });
+  };
+
+  const reviewData_Remove = (index) => {
+    setCommonData({
+      ...commonData,
+      review: commonData.review.filter((value, i) => i !== index)
+    });
   };
 
   return (
@@ -587,7 +596,7 @@ function DetailInfo({ location }) {
             </ul>
           </div>
           <div className="review-container">
-            <div className="review-title">리뷰 (32)</div>
+            <div className="review-title">리뷰</div>
             <ReviewEdit contenttypeid={query.contenttypeid} contentid={query.contentid} commonData={commonData} reviewData_Add={reviewData_Add} />
             {reviewRendering()}
             {/* <Review /> */}

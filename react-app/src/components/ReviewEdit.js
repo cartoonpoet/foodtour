@@ -18,7 +18,6 @@ function ReviewEdit(props) {
     rating: Number(0),
     imgs: [],
   });
-  const [review, setReview] = useState([]);
 
   const handleDelete = (i) => {
     console.log(data);
