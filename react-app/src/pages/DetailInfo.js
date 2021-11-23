@@ -219,6 +219,7 @@ function DetailInfo({ location }) {
     }
 
     const InsertViews = () => {
+
       return axios.post(
         "http://localhost:4000/api/views",
         {
@@ -229,6 +230,7 @@ function DetailInfo({ location }) {
     }
 
     const getViews = () => {
+
       return axios.get(
         "http://localhost:4000/api/views/" + query.contentid
       );
@@ -242,6 +244,7 @@ function DetailInfo({ location }) {
 
     setIsLoading(true);
     setCommonData({});
+
     axios
       .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews(), getReviewCount()])
       .then(
@@ -259,7 +262,6 @@ function DetailInfo({ location }) {
           allData.images = ImageResp;
           setCommonData(allData);
           setIsLoading(false);
-
         })
       )
       .catch((error) => {

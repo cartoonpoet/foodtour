@@ -3,6 +3,7 @@ import userRouter from './routers/userRouter';
 import reviewRouter from './routers/reviewRouter';
 import viewsRouter from './routers/viewsRouter';
 import reviewCountRouter from './routers/reviewCountRouter';
+import reviewGradeRouter from './routers/reviewGradeRouter';
 
 const app = express();
 const cors = require('cors');
@@ -20,5 +21,6 @@ app.use('/api/cert', userRouter);
 app.use('/api', reviewRouter);
 app.use('/api', viewsRouter);
 app.use('/api', reviewCountRouter);
+app.use('/api', reviewGradeRouter);
 
 export default app;

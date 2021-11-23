@@ -1,13 +1,13 @@
 import express from 'express';
 import pool from '../mysql';
 
-const reviewCountRouter = express.Router();
+const reviewGradeRouter = express.Router();
 
-reviewCountRouter.get('/review/count/:contentid', async function (req, res) {
+reviewGradeRouter.get('/review/grade/:contentid', async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
     try {
-        console.log("리뷰 수 조회");
-        const views_select_sql = `SELECT count(*) as review_count FROM foodtour.review 
+        console.log("장소 평점 조회");
+        const views_select_sql = `SELECT foodtour.review.contenttypeid, foodtour.review.contentid, avg(foodtour.review.grade) as grade FROM foodtour.review 
                             WHERE foodtour.review.contentid = ?`;
         const select_result_query = await conn.query(views_select_sql, [req.params.contentid]);
         conn.release();
@@ -19,4 +19,4 @@ reviewCountRouter.get('/review/count/:contentid', async function (req, res) {
     }
 });
 
-export default reviewCountRouter;
+export default reviewGradeRouter;

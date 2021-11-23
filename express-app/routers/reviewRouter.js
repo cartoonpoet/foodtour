@@ -9,6 +9,7 @@ const reviewRouter = express.Router();
 reviewRouter.get('/review', async function (req, res) {
     // console.log(req.query);
     const conn = await pool.getConnection(async conn => conn);
+    console.log("GET: review");
     try {
         const review_select_sql = `SELECT foodtour.review.id as review_id, 
                                         foodtour.user.id as user_id,
@@ -27,9 +28,11 @@ reviewRouter.get('/review', async function (req, res) {
                                 order by foodtour.review.write_date desc, foodtour.review.id desc;
 `;
         const reviewData = await conn.query(review_select_sql, [req.query.contenttypeid, req.query.contentid]);
+        conn.release();
         res.json(reviewData[0]);
     } catch (err) {
         console.log(err.message);
+        conn.release();
         res.status(400).json({ message: 'query parameter를 확인해주세요.' });
     }
 });
@@ -120,9 +123,10 @@ reviewRouter.delete('/review/:review_id', async function (req, res) {
 
         const review_delete_sql = `delete from foodtour.review where foodtour.review.id = ?`;
         const delete_result = await conn.query(review_delete_sql, [req.params.review_id]);
-
+        conn.release();
         res.status(204).json(delete_result);
     } catch (err) {
+        conn.release();
         res.status(400).json({ message: 'review_id를 확인해주세요.' });
     }
 
