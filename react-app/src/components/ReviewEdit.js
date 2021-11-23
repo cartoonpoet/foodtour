@@ -18,9 +18,7 @@ function ReviewEdit(props) {
     rating: Number(0),
     imgs: [],
   });
-  const [review, setReview] = useState({
-
-  });
+  const [review, setReview] = useState([]);
 
   const handleDelete = (i) => {
     console.log(data);
@@ -83,6 +81,7 @@ function ReviewEdit(props) {
     })
       .then((res) => {
         console.log(res.data);
+        setReview(review.concat(res.data));
       });
   }
 
@@ -135,7 +134,6 @@ function ReviewEdit(props) {
 
       <Rating
         value={data.rating}
-        precision={0.5}
         onChange={(event, newValue) => {
           setData({ ...data, rating: newValue });
         }}

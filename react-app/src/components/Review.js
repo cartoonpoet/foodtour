@@ -2,59 +2,83 @@ import React from "react";
 import "./Review.css";
 import Rating from "@mui/material/Rating";
 
-function Review() {
-  const [value, setValue] = React.useState(2);
+function Review(props) {
+
+  const content = () => {
+    return { __html: props.content };
+  };
+
+  const img = () => {
+    const result = [];
+
+    if (props.imgs_path !== "") {
+      for (let i = 0; i < props.imgs_path.split("<").length; i++) {
+        result.push(
+          <React.Fragment key={i}>
+            <img
+              onClick={() =>
+                window.open(
+                  "http://localhost:4000" + props.imgs_path.split("<")[i].slice(5),
+                  "_blank"
+                )
+              }
+              alt="none img"
+              src={"http://localhost:4000" + props.imgs_path.split("<")[i].slice(5)}
+            />
+          </React.Fragment>
+        );
+
+      }
+    }
+    return result;
+  }
+
+  const tag = () => {
+    const result = [];
+    if (props.tags !== "") {
+      for (let i = 0; i < props.tags.split("<").length; i++) {
+        result.push(
+          <React.Fragment key={i}>
+            <span className="hashtag">#{props.tags.split("<")[i]}</span>
+          </React.Fragment>
+        );
+      }
+    }
+    return result;
+  }
+
 
   return (
     <>
       <ul className="review-box">
         <li className="user-info">
           <img
-            alt="dfdsf"
-            src="https://s3-ap-northeast-2.amazonaws.com/mp-seoul-image-production/1789241_1603699569063?fit=around|56:56&crop=56:56;*,*&output-format=jpg&output-quality=80"
+            alt="이미지를 찾을 수 없습니다."
+            src={props.profile_img}
           />
           <div className="top-box">
             <div className="con">
-              <div className="nickname">국화꽃향기</div>
-              <div className="register-date">2021-11-21 02:16:55</div>
-              <div className="change">수정</div>
-              <div className="remove">삭제</div>
+              <div className="nickname">{props.nickname}</div>
+              <div className="register-date">{props.write_date}</div>
+              {props.user_id === parseInt(window.localStorage.getItem("id")) && <div className="change">수정</div>}
+              {props.user_id === parseInt(window.localStorage.getItem("id")) && <div className="remove">삭제</div>}
             </div>
             <Rating
               name="read-only"
-              value={value}
+              value={parseInt(props.grade)}
               readOnly
               className="rating"
             />
           </div>
         </li>
         <div className="content">
-          양배추밭 뷰맛집이네요~ 탕수육 맛있어요 양도 많고.. 2인이 짜장 짬뽕
-          <br />
-          탕슉은 무리예요
-          <br />
-          fdsfdsfsdfsdf sd fdsfds
-          <br />
-          fsdfsdffds fdsfdsfsdfsdfsfds fdsfdsfsdfsdfsaaa
+          <div dangerouslySetInnerHTML={content()} />
         </div>
         <div className="imgs">
-          <img
-            onClick={() =>
-              window.open(
-                "https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E",
-                "_blank"
-              )
-            }
-            alt="dfsf"
-            src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"
-          />
-          <img
-            alt="dfsf"
-            src="https://s3-ap-northeast-1.amazonaws.com/dcreviewsresized/20211116093012_photo1_73858665a3d7.jpg"
-          />
+          {img()}
         </div>
         <div className="tags">
-          <span className="hashtag">#좋아요</span>
+          {tag()}
         </div>
       </ul>
     </>

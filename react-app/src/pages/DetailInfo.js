@@ -85,6 +85,9 @@ function DetailInfo({ location }) {
     smoking: null, //금연/흡연 여부
     treatmenu: null, //취급 메뉴
     lcnsno: null, //인허가번호
+
+    //리뷰 데이터
+    review: []
   });
 
   const words = [
@@ -196,21 +199,32 @@ function DetailInfo({ location }) {
         }
       );
     };
+
+    const getReviewInfo = () => {
+      return axios.get(
+        "http://localhost:4000/api/review",
+        {
+          params: {
+            contentid: query.contentid,
+            contenttypeid: query.contenttypeid,
+          },
+        }
+      );
+    }
+
     setIsLoading(true);
     setCommonData({});
     axios
-      .all([getCommonInfo(), getImageInfo(), getIntroInfo()])
+      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo()])
       .then(
-        axios.spread((commonResp, ImageResp, IntroResp) => {
+        axios.spread((commonResp, ImageResp, IntroResp, reviewResp) => {
           commonResp = commonResp.data.response.body.items.item;
           ImageResp = ImageResp.data.response.body.items.item;
           IntroResp = IntroResp.data.response.body.items.item;
-
-          let allData = { ...commonResp, ...IntroResp };
+          console.log(reviewResp.data)
+          let allData = { ...commonResp, ...IntroResp, review: reviewResp.data };
           allData.images = ImageResp;
-
           setCommonData(allData);
-
           setIsLoading(false);
         })
       )
@@ -265,6 +279,28 @@ function DetailInfo({ location }) {
 
     return result;
   };
+
+  const reviewRendering = () => {
+    const result = [];
+    for (let i = 0; i < commonData.review.length; i++) {
+      result.push(
+        <React.Fragment key={commonData.review[i].review_id} >
+          <Review review_id={commonData.review[i].review_id}
+            content={commonData.review[i].content}
+            grade={commonData.review[i].grade}
+            nickname={commonData.review[i].nickname}
+            profile_img={commonData.review[i].profile_img}
+            tags={commonData.review[i].tags}
+            write_date={commonData.review[i].write_date}
+            user_id={commonData.review[i].user_id}
+            imgs_path={commonData.review[i].imgs_path}
+          />
+        </React.Fragment>
+      );
+    }
+
+    return result;
+  }
 
   return (
     <>
@@ -549,7 +585,8 @@ function DetailInfo({ location }) {
           <div className="review-container">
             <div className="review-title">리뷰 (32)</div>
             <ReviewEdit contenttypeid={query.contenttypeid} contentid={query.contentid} />
-            <Review />
+            {reviewRendering()}
+            {/* <Review /> */}
           </div>
         </div>
       )}

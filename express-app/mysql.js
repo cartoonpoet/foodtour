@@ -6,6 +6,7 @@ const pool = mysql.createPool({
     password: 'ssdd4670',
     database: 'foodtour',
     connectionLimit: 50,
+    dateStrings: 'date',
 });
 
 

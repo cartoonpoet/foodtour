@@ -5,6 +5,35 @@ import fs from 'fs';
 
 const reviewRouter = express.Router();
 
+
+reviewRouter.get('/review', async function (req, res) {
+    console.log(req.query);
+    const conn = await pool.getConnection(async conn => conn);
+    try {
+        const review_select_sql = `SELECT foodtour.review.id as review_id, 
+                                        foodtour.user.id as user_id,
+                                        foodtour.user.nickname, 
+                                        foodtour.user.profile_img, 
+                                        foodtour.review.content, 
+                                        foodtour.review.grade, 
+                                        foodtour.review.write_date,
+                                        GROUP_CONCAT(distinct IFNULL(foodtour.hashtag.tag_name, '') SEPARATOR '<') as tags,
+                                        GROUP_CONCAT(distinct IFNULL(foodtour.review_img.img_path, '') SEPARATOR '<') as imgs_path
+                                from foodtour.user left join foodtour.review on foodtour.user.id = foodtour.review.user_id 
+                                left join foodtour.hashtag on foodtour.review.id = foodtour.hashtag.review_id 
+                                left join foodtour.review_img on foodtour.review.id = foodtour.review_img.review_id 
+                                where foodtour.review.contenttypeid = ? and foodtour.review.contentid = ?
+                                GROUP BY foodtour.review.id
+                                order by foodtour.review.write_date desc, foodtour.review.id desc;
+`;
+        const reviewData = await conn.query(review_select_sql, [req.query.contenttypeid, req.query.contentid]);
+        res.json(reviewData[0]);
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).json({ message: 'query parameter를 확인해주세요.' });
+    }
+});
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //파일이 이미지 파일이면
@@ -64,8 +93,9 @@ reviewRouter.post('/review', upload.array("imgs[]", 5), async function (req, res
                                         foodtour.review.content, 
                                         foodtour.review.grade, 
                                         foodtour.review.write_date,
-                                        GROUP_CONCAT(foodtour.hashtag.tag_name SEPARATOR ',') as tags,
-                                        GROUP_CONCAT(foodtour.review_img.img_path SEPARATOR ',') as imgs_path
+                                        GROUP_CONCAT(distinct IFNULL(foodtour.hashtag.tag_name, '') SEPARATOR '<') as tags,
+                                        GROUP_CONCAT(distinct IFNULL(foodtour.review_img.img_path, '') SEPARATOR '<') as imgs_path,
+                                        foodtour.review.user_id
                                     from foodtour.review left join foodtour.user on foodtour.review.user_id = foodtour.user.id
                                     left join foodtour.hashtag on foodtour.review.id = foodtour.hashtag.review_id 
                                     left join foodtour.review_img on foodtour.review.id = foodtour.review_img.review_id 
