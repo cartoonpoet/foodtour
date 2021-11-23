@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import './TopNav.css';
 import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";

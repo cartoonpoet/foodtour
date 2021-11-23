@@ -16,8 +16,8 @@ function Map(props) {
             imageOption = { offset: new window.kakao.maps.Point(27, 69) };
         const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
         const map = new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
-        map.setDraggable(false);
-        map.setZoomable(false);
+        // map.setDraggable(false);
+        // map.setZoomable(false);
         let marker = new window.kakao.maps.Marker({
             position: new window.kakao.maps.LatLng(parseFloat(props.mapy), parseFloat(props.mapx)),
             image: markerImage

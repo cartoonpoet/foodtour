@@ -64,19 +64,29 @@ function SearchResult({ match }) {
         })
             .then(function (response) {
                 //response
-                // console.log(JSON.stringify(response));
+                console.log(JSON.stringify(response));
                 const result = response.data;
-                // console.log("total : " + result.response.body.totalCount);
+                console.log("total : " + result.response.body.totalCount);
                 let dataSet = [];
-                for (let i = 0; i < result.response.body.totalCount; i++) {
-                    if (result.response.body.items.item[i].contenttypeid === 12 || result.response.body.items.item[i].contenttypeid === 39) {
-                        dataSet.push({
-                            firstimage: result.response.body.items.item[i].firstimage !== undefined ? result.response.body.items.item[i].firstimage : none_img,
-                            contentId: result.response.body.items.item[i].contentid,
-                            contentTypeId: result.response.body.items.item[i].contenttypeid,
-                            title: result.response.body.items.item[i].title
-                        });
+                if (result.response.body.totalCount > 1) {
+                    for (let i = 0; i < result.response.body.totalCount; i++) {
+                        if (result.response.body.items.item[i].contenttypeid === 12 || result.response.body.items.item[i].contenttypeid === 39) {
+                            dataSet.push({
+                                firstimage: result.response.body.items.item[i].firstimage !== undefined ? result.response.body.items.item[i].firstimage : none_img,
+                                contentId: result.response.body.items.item[i].contentid,
+                                contentTypeId: result.response.body.items.item[i].contenttypeid,
+                                title: result.response.body.items.item[i].title
+                            });
+                        }
                     }
+                }
+                else if (result.response.body.totalCount === 1) {
+                    dataSet.push({
+                        firstimage: result.response.body.items.item.firstimage !== undefined ? result.response.body.items.item.firstimage : none_img,
+                        contentId: result.response.body.items.item.contentid,
+                        contentTypeId: result.response.body.items.item.contenttypeid,
+                        title: result.response.body.items.item.title
+                    });
                 }
                 setSearchData([...dataSet]);
                 setIsLoading(false);
