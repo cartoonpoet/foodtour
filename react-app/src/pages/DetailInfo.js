@@ -16,6 +16,7 @@ import "tippy.js/animations/scale.css";
 import NoneDataAlert from "../components/NoneDataAlert";
 import Review from "../components/Review";
 import ReviewEdit from "../components/ReviewEdit";
+import { common } from "@mui/material/colors";
 
 SwiperCore.use([Pagination, Navigation]);
 
@@ -24,7 +25,7 @@ const options = {
   enableTooltip: true,
   deterministic: false,
   fontFamily: "impact",
-  fontSizes: [5, 50],
+  fontSizes: [20, 80],
   fontStyle: "normal",
   fontWeight: "normal",
   padding: 1,
@@ -93,55 +94,11 @@ function DetailInfo({ location }) {
     views: null,
 
     //리뷰수
-    reviewCount: null
-  });
+    reviewCount: null,
 
-  const words = [
-    {
-      text: "맛있다",
-      value: 1,
-    },
-    {
-      text: "뷰가 죽여줘요",
-      value: 2,
-    },
-    {
-      text: "여기가 찐 맛집",
-      value: 3,
-    },
-    {
-      text: "인스타맛집",
-      value: 10,
-    },
-    {
-      text: "1fsadfsda",
-      value: 4,
-    },
-    {
-      text: "2fsdaf",
-      value: 4,
-    },
-    {
-      text: "fsdafsdafs",
-      value: 4,
-    },
-    {
-      text: "fa",
-      value: 4,
-    },
-    {
-      text: "fsdafsa",
-      value: 4,
-    },
-    {
-      text: "wwq",
-      value: 4,
-    },
-    {
-      text: "sdagasgg",
-      value: 4,
-    },
-  ];
+    //워드클라우드 해시태그
+    words: []
+  });
 
   useEffect(() => {
     const getCommonInfo = () => {
@@ -242,13 +199,19 @@ function DetailInfo({ location }) {
       );
     }
 
+    const getHashtagFrequency = () => {
+      return axios.get(
+        "http://localhost:4000/api/hashtag/frequency/" + query.contentid
+      );
+    }
+
     setIsLoading(true);
     setCommonData({});
 
     axios
-      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews(), getReviewCount()])
+      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews(), getReviewCount(), getHashtagFrequency()])
       .then(
-        axios.spread((commonResp, ImageResp, IntroResp, reviewResp, insertViewsResp, getViewsResp, getReviewCountResp) => {
+        axios.spread((commonResp, ImageResp, IntroResp, reviewResp, insertViewsResp, getViewsResp, getReviewCountResp, getHashtagFrequencyResp) => {
           commonResp = commonResp.data.response.body.items.item;
           ImageResp = ImageResp.data.response.body.items.item;
           IntroResp = IntroResp.data.response.body.items.item;
@@ -257,7 +220,8 @@ function DetailInfo({ location }) {
             ...IntroResp,
             review: reviewResp.data,
             views: getViewsResp.data.view_count,
-            reviewCount: getReviewCountResp.data.review_count
+            reviewCount: getReviewCountResp.data.review_count,
+            words: getHashtagFrequencyResp.data
           };
           allData.images = ImageResp;
           setCommonData(allData);
@@ -626,9 +590,7 @@ function DetailInfo({ location }) {
                 </>
               )}
 
-              <div className="wordcloud">
-                <ReactWordcloud options={options} words={words} />
-              </div>
+              {commonData.words.length > 1 && <div className="wordcloud"><ReactWordcloud options={options} words={commonData.words} /></div>}
             </ul>
           </div>
           <div className="review-container">

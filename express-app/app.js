@@ -4,6 +4,7 @@ import reviewRouter from './routers/reviewRouter';
 import viewsRouter from './routers/viewsRouter';
 import reviewCountRouter from './routers/reviewCountRouter';
 import reviewGradeRouter from './routers/reviewGradeRouter';
+import hashtagFrequencyRouter from './routers/hashtagFrequencyRouter';
 
 const app = express();
 const cors = require('cors');
@@ -22,5 +23,6 @@ app.use('/api', reviewRouter);
 app.use('/api', viewsRouter);
 app.use('/api', reviewCountRouter);
 app.use('/api', reviewGradeRouter);
+app.use('/api/hashtag', hashtagFrequencyRouter);
 
 export default app;
