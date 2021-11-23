@@ -14,7 +14,7 @@ viewsRouter.get('/views/:contentid', async function (req, res) {
         res.json(select_result_query[0][0]);
     } catch (err) {
         console.log(err.message);
-        res.status(400).json({ message: 'request body를 확인해주세요.' });
+        res.status(400).json({ message: 'params를 확인해주세요.' });
     }
 });
 

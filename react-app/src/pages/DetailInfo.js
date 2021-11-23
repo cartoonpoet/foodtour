@@ -93,7 +93,7 @@ function DetailInfo({ location }) {
     views: null,
 
     //리뷰수
-    reviews: null
+    reviewCount: null
   });
 
   const words = [
@@ -234,21 +234,32 @@ function DetailInfo({ location }) {
       );
     }
 
+    const getReviewCount = () => {
+      return axios.get(
+        "http://localhost:4000/api/review/count/" + query.contentid
+      );
+    }
+
     setIsLoading(true);
     setCommonData({});
     axios
-      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews()])
+      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews(), getReviewCount()])
       .then(
-        axios.spread((commonResp, ImageResp, IntroResp, reviewResp, insertViewsResp, getViewsResp) => {
+        axios.spread((commonResp, ImageResp, IntroResp, reviewResp, insertViewsResp, getViewsResp, getReviewCountResp) => {
           commonResp = commonResp.data.response.body.items.item;
           ImageResp = ImageResp.data.response.body.items.item;
           IntroResp = IntroResp.data.response.body.items.item;
-          let allData = { ...commonResp, ...IntroResp, review: reviewResp.data, views: getViewsResp.data.view_count };
+          let allData = {
+            ...commonResp,
+            ...IntroResp,
+            review: reviewResp.data,
+            views: getViewsResp.data.view_count,
+            reviewCount: getReviewCountResp.data.review_count
+          };
           allData.images = ImageResp;
           setCommonData(allData);
           setIsLoading(false);
-          console.log(insertViewsResp.data);
-          console.log(getViewsResp.data.view_count);
+
         })
       )
       .catch((error) => {
@@ -359,7 +370,7 @@ function DetailInfo({ location }) {
               <BsFillEyeFill />
               <span className="views">{commonData.views === undefined ? 1 : commonData.views}</span>
               <BsFillPencilFill />
-              <span className="reviews">100</span>
+              <span className="reviews">{commonData.reviewCount === undefined ? 0 : commonData.reviewCount}</span>
             </li>
           </ul>
 
