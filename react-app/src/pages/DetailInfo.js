@@ -302,6 +302,10 @@ function DetailInfo({ location }) {
     return result;
   }
 
+  const reviewData_Add = (review) => {
+    setCommonData({ ...commonData, review: [review, ...commonData.review] });
+  };
+
   return (
     <>
       <hr className="top-line" />
@@ -584,7 +588,7 @@ function DetailInfo({ location }) {
           </div>
           <div className="review-container">
             <div className="review-title">리뷰 (32)</div>
-            <ReviewEdit contenttypeid={query.contenttypeid} contentid={query.contentid} />
+            <ReviewEdit contenttypeid={query.contenttypeid} contentid={query.contentid} commonData={commonData} reviewData_Add={reviewData_Add} />
             {reviewRendering()}
             {/* <Review /> */}
           </div>

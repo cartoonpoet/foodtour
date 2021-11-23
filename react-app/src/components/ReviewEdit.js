@@ -74,6 +74,7 @@ function ReviewEdit(props) {
       rating: Number(0),
       imgs: [],
     });
+
     axios.post("http://localhost:4000/api/review", fd, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -81,7 +82,8 @@ function ReviewEdit(props) {
     })
       .then((res) => {
         console.log(res.data);
-        setReview(review.concat(res.data));
+        // setReview(review.concat(res.data));
+        props.reviewData_Add(res.data)
       });
   }
 
