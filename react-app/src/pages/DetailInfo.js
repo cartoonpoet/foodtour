@@ -87,7 +87,13 @@ function DetailInfo({ location }) {
     lcnsno: null, //인허가번호
 
     //리뷰 데이터
-    review: []
+    review: [],
+
+    //조회수
+    views: null,
+
+    //리뷰수
+    reviews: null
   });
 
   const words = [
@@ -212,20 +218,37 @@ function DetailInfo({ location }) {
       );
     }
 
+    const InsertViews = () => {
+      return axios.post(
+        "http://localhost:4000/api/views",
+        {
+          contentid: query.contentid,
+          contenttypeid: query.contenttypeid
+        }
+      );
+    }
+
+    const getViews = () => {
+      return axios.get(
+        "http://localhost:4000/api/views/" + query.contentid
+      );
+    }
+
     setIsLoading(true);
     setCommonData({});
     axios
-      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo()])
+      .all([getCommonInfo(), getImageInfo(), getIntroInfo(), getReviewInfo(), InsertViews(), getViews()])
       .then(
-        axios.spread((commonResp, ImageResp, IntroResp, reviewResp) => {
+        axios.spread((commonResp, ImageResp, IntroResp, reviewResp, insertViewsResp, getViewsResp) => {
           commonResp = commonResp.data.response.body.items.item;
           ImageResp = ImageResp.data.response.body.items.item;
           IntroResp = IntroResp.data.response.body.items.item;
-          console.log(reviewResp.data)
-          let allData = { ...commonResp, ...IntroResp, review: reviewResp.data };
+          let allData = { ...commonResp, ...IntroResp, review: reviewResp.data, views: getViewsResp.data.view_count };
           allData.images = ImageResp;
           setCommonData(allData);
           setIsLoading(false);
+          console.log(insertViewsResp.data);
+          console.log(getViewsResp.data.view_count);
         })
       )
       .catch((error) => {
@@ -334,9 +357,9 @@ function DetailInfo({ location }) {
             <li className="title">{commonData.title}</li>
             <li className="extra-info-box">
               <BsFillEyeFill />
-              <span className="views">117,495</span>
+              <span className="views">{commonData.views === undefined ? 1 : commonData.views}</span>
               <BsFillPencilFill />
-              <span className="reviews">41</span>
+              <span className="reviews">100</span>
             </li>
           </ul>
 

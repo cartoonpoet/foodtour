@@ -7,7 +7,7 @@ const reviewRouter = express.Router();
 
 
 reviewRouter.get('/review', async function (req, res) {
-    console.log(req.query);
+    // console.log(req.query);
     const conn = await pool.getConnection(async conn => conn);
     try {
         const review_select_sql = `SELECT foodtour.review.id as review_id, 

@@ -1,7 +1,7 @@
 import express from 'express';
 import userRouter from './routers/userRouter';
 import reviewRouter from './routers/reviewRouter';
-
+import viewsRouter from './routers/viewsRouter';
 
 const app = express();
 const cors = require('cors');
@@ -17,5 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('image'));
 app.use('/api/cert', userRouter);
 app.use('/api', reviewRouter);
+app.use('/api', viewsRouter);
 
 export default app;
