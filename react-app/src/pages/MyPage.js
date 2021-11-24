@@ -25,7 +25,7 @@ function MyPage() {
                     <li className="title"><AiFillBell />&nbsp;개인정보 파기</li>
                     <li className="description1">안전하게</li>
                     <li className="description2">회원탈퇴</li>
-                    <Link to="/modify" className="remove-btn">탈퇴</Link>
+                    <Link to="/remove" className="remove-btn">탈퇴</Link>
                     <li className="description4">회원탈퇴시 개인정보는 즉시 파기됩니다</li>
                 </ul>
             </div>
