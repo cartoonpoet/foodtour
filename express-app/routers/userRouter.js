@@ -5,13 +5,21 @@ import Jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
-// userRouter.get('/user/:id', function (req, res) {
-//     const sql = "SELECT * FROM social_type"
-//     con.query(sql, function (err, result, fields) {
-//         if (err) throw err;
-//         res.send(result)
-//     });
-// });
+userRouter.get('/user/:user_id', async function (req, res) {
+    const conn = await pool.getConnection(async conn => conn);
+    try {
+        console.log("유저 정보 조회");
+        const getUser_sql = `SELECT * FROM foodtour.user WHERE foodtour.user.id = ?`;
+        const userInfo = await conn.query(getUser_sql, [req.params.user_id]);
+        console.log(userInfo[0]);
+        conn.release();
+        res.json(userInfo[0][0]);
+    } catch (err) {
+        console.log(err.message);
+        conn.release();
+        res.status(400).json({ message: '유효하지 않은 User_id입니다.' });
+    }
+})
 
 
 function createCode(iLength) {
