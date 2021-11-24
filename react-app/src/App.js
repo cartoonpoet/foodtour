@@ -9,6 +9,7 @@ import './components/common.css';
 import Footer from "./components/Footer";
 import MyPage from "./pages/MyPage";
 import ProfileModify from "./pages/ProfileModify";
+import ProfileRemove from "./pages/ProfileRemove";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/detail" component={DetailInfo} exact />
           <Route path="/mypage" component={MyPage} exact />
           <Route path="/mypage/modify" component={ProfileModify} exact />
+          <Route path="/mypage/remove" component={ProfileRemove} exact />
         </Switch>
         <Footer />
       </Router>

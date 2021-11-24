@@ -68,7 +68,7 @@ function Review(props) {
         <li className="user-info">
           <img
             alt="이미지를 찾을 수 없습니다."
-            src={props.profile_img}
+            src={"http://localhost:4000/" + props.profile_img}
           />
           <div className="top-box">
             <div className="con">
