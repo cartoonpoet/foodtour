@@ -108,6 +108,7 @@
     color: gray;
     padding: 10px 25px;
     cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .profile-modify-container .form .btn-group .modify-btn {
@@ -118,4 +119,5 @@
     padding: 10px 25px;
     cursor: pointer;
     margin-left: 5px;
+    font-size: 1.5rem;
 }
