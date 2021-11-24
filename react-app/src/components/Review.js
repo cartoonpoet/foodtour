@@ -19,12 +19,12 @@ function Review(props) {
             <img
               onClick={() =>
                 window.open(
-                  "http://localhost:4000" + props.imgs_path.split("<")[i].slice(5),
+                  "http://localhost:4000/" + props.imgs_path.split("<")[i],
                   "_blank"
                 )
               }
               alt="none img"
-              src={"http://localhost:4000" + props.imgs_path.split("<")[i].slice(5)}
+              src={"http://localhost:4000/" + props.imgs_path.split("<")[i]}
             />
           </React.Fragment>
         );

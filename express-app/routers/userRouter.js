@@ -2,18 +2,59 @@ import express from 'express';
 import pool from '../mysql';
 import axios from 'axios';
 import Jwt from 'jsonwebtoken';
+import multer from 'multer';
+import fs from "fs";
 
 const userRouter = express.Router();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        //파일이 이미지 파일이면
+        const { contentid, contenttypeid } = req.body;
+        if (file.mimetype == "image/jpeg" || file.mimetype == "image/jpg" || file.mimetype == "image/png") {
+            console.log("이미지 파일이네요")
+            const path = "image/profile/" + req.params.user_id;
+            fs.mkdirSync(path, { recursive: true });
+            cb(null, path);
+        }
+    },
+    //파일이름 설정
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname)
+    }
+})
+
+var upload = multer({ storage: storage });
 
 userRouter.get('/user/:user_id', async function (req, res) {
     const conn = await pool.getConnection(async conn => conn);
     try {
-        console.log("유저 정보 조회");
+        console.log("GET: 유저 정보 조회");
         const getUser_sql = `SELECT * FROM foodtour.user WHERE foodtour.user.id = ?`;
         const userInfo = await conn.query(getUser_sql, [req.params.user_id]);
-        console.log(userInfo[0]);
         conn.release();
         res.json(userInfo[0][0]);
+    } catch (err) {
+        console.log(err.message);
+        conn.release();
+        res.status(400).json({ message: '유효하지 않은 User_id입니다.' });
+    }
+})
+
+userRouter.patch('/user/:user_id', upload.single("file"), async function (req, res) {
+    const conn = await pool.getConnection(async conn => conn);
+    try {
+        console.log("PATCH: 유저 정보 수정");
+
+        const updateUser_sql = `
+        UPDATE  foodtour.user
+        SET email = ?, name = ?, nickname = ?, profile_img = IFNULL(?, profile_img)
+        WHERE id = ?
+        ;
+        `
+        const updateQuery = await conn.query(updateUser_sql, [req.body.email, req.body.name, req.body.nickname, req.file ? req.file.path : null, req.params.user_id]);
+        conn.release();
+        res.json({ message: "프로필 수정 완료" });
     } catch (err) {
         console.log(err.message);
         conn.release();
