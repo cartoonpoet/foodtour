@@ -16,7 +16,7 @@ import "tippy.js/animations/scale.css";
 import NoneDataAlert from "../components/NoneDataAlert";
 import Review from "../components/Review";
 import ReviewEdit from "../components/ReviewEdit";
-import { common } from "@mui/material/colors";
+// import { common } from "@mui/material/colors";
 
 SwiperCore.use([Pagination, Navigation]);
 
