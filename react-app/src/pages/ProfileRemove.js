@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProfileRemove.css";
 import Checkbox from '@mui/material/Checkbox';
 import { Link } from "react-router-dom";
 import { orange } from '@mui/material/colors';
 
 function ProfileRemove() {
+    const [agreement, setAgreement] = useState({
+        idNotReturnIsOK: false,
+        myInfoRemoveIsOK: false,
+        reviewRemoveIsOK: false
+    });
+
+    const { idNotReturnIsOK, myInfoRemoveIsOK, reviewRemoveIsOK } = agreement;
+    const onChange = (e) => {
+        setAgreement({ ...agreement, [e.target.name]: e.target.checked })
+    };
+
     return (
         <>
             <hr className="top-line" />
@@ -19,7 +30,10 @@ function ProfileRemove() {
                             '& .MuiSvgIcon-root': { fontSize: 25 }, '&.Mui-checked': {
                                 color: orange[600],
                             }
-                        }} />
+                        }}
+                            name="idNotReturnIsOK"
+                            onChange={onChange}
+                            checked={idNotReturnIsOK} />
                     </li>
                     <li className="notice-box">
                         <div className="remove-title">내정보 기록 삭제 안내</div>
@@ -29,7 +43,10 @@ function ProfileRemove() {
                             '& .MuiSvgIcon-root': { fontSize: 25 }, '&.Mui-checked': {
                                 color: orange[600],
                             }
-                        }} />
+                        }}
+                            name="myInfoRemoveIsOK"
+                            onChange={onChange}
+                            checked={myInfoRemoveIsOK} />
                     </li>
                     <li className="notice-box">
                         <div className="remove-title">리뷰 삭제 안내</div>
@@ -39,7 +56,10 @@ function ProfileRemove() {
                             '& .MuiSvgIcon-root': { fontSize: 25 }, '&.Mui-checked': {
                                 color: orange[600],
                             }
-                        }} />
+                        }}
+                            name="reviewRemoveIsOK"
+                            onChange={onChange}
+                            checked={reviewRemoveIsOK} />
                     </li>
                     <li className="btn-group">
                         <Link to="/mypage" className="cancel-btn">취소</Link>
