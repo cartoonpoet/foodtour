@@ -38,7 +38,7 @@ function TopNav() {
                 {!window.localStorage.getItem("token") && <span className="elements-align elements" onClick={onModal}>로그인</span>}
                 {window.localStorage.getItem("token") && <span className="elements-align elements" onClick={onRemoveToken}>로그아웃</span>}
                 <span className="elements-align v-line">|</span>
-                {window.localStorage.getItem("token") && <Link to="/profile" className="elements-align elements">마이페이지</Link>}
+                {window.localStorage.getItem("token") && <Link to="/mypage" className="elements-align elements">마이페이지</Link>}
                 {modal && <SignIn onModal={onModal} />}
             </div>
         </div>
