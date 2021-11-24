@@ -1,0 +1,119 @@
+.profile-modify-container {
+    width: 700px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+.profile-modify-container .notice-box {
+    padding: 15px 15px 20px 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+.profile-modify-container .notice-box .notice {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.profile-modify-container .notice-box .notice-kakao {
+    margin-top: 10px;
+    font-size: 1.3rem;
+    background-color: RGB(255, 224, 1);
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 5px;
+    color: RGB(68, 37, 1);
+    font-weight: bold;
+}
+
+.profile-modify-container .form {
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+.profile-modify-container .form .profile-img {
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.profile-modify-container .form .profile-img img {
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+}
+
+.profile-modify-container .form .profile-img .img-label {
+    font-size: 20px;
+    position: absolute;
+    z-index: 3;
+    background-color: RGB(126, 132, 148);
+    color: white;
+    text-align: center;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 100%;
+    border: 1px solid white;
+    bottom: 0;
+    right: 43%;
+    cursor: pointer;
+}
+
+.profile-modify-container .form .profile-img .img-label .camera-icon {
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.profile-modify-container .form .user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profile-modify-container .form .user-info .divided-form {
+    margin-left: 50px;
+}
+
+.profile-modify-container .form .user-info .divided-form .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.profile-modify-container .form .user-info .divided-form input {
+    padding: 5px 10px;
+    width: 200px;
+    margin-top: 5px;
+    background-color: #f9fafc;
+    border: 1px solid #ccc;
+}
+
+.profile-modify-container .form .btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid #ccc;
+    margin-top: 40px;
+}
+
+.profile-modify-container .form .btn-group .cancel-btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+    padding: 10px 25px;
+    cursor: pointer;
+}
+
+.profile-modify-container .form .btn-group .modify-btn {
+    background-color: rgb(255, 123, 0);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    padding: 10px 25px;
+    cursor: pointer;
+    margin-left: 5px;
+}

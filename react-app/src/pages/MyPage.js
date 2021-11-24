@@ -18,7 +18,7 @@ function MyPage() {
                     <li className="title"><AiFillBell />&nbsp;안전하게 보호</li>
                     <li className="description1">내 정보를</li>
                     <li className="description2">최신정보로 관리</li>
-                    <Link to="/modify" className="modify-btn">변경</Link>
+                    <Link to="/mypage/modify" className="modify-btn">변경</Link>
                     <li className="description4">주기적으로 변경해주세요</li>
                 </ul>
                 <ul className="mypage-box">

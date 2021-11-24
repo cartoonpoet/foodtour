@@ -8,6 +8,7 @@ import SearchBar from "./components/SearchBar";
 import './components/common.css';
 import Footer from "./components/Footer";
 import MyPage from "./pages/MyPage";
+import ProfileModify from "./pages/ProfileModify";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/search/:keyword" component={SearchResult} exact />
           <Route path="/detail" component={DetailInfo} exact />
           <Route path="/mypage" component={MyPage} exact />
+          <Route path="/mypage/modify" component={ProfileModify} exact />
         </Switch>
         <Footer />
       </Router>
