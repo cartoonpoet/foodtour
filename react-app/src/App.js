@@ -6,6 +6,7 @@ import DetailInfo from "./pages/DetailInfo";
 import TopNav from "./components/TopNav";
 import SearchBar from "./components/SearchBar";
 import './components/common.css';
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/search/:keyword" component={SearchResult} exact />
           <Route path="/detail" component={DetailInfo} exact />
         </Switch>
+        <Footer />
       </Router>
     </>
   );

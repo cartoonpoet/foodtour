@@ -1,0 +1,25 @@
+.footer-container {
+    width: 100%;
+    background-color: #222;
+    margin-top: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.footer-container .footer-box {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    color: #999;
+    align-items: center;
+}
+
+.footer-container .footer-box .footer-logo {
+    width: 300px;
+    height: auto;
+}
+
+.footer-container .footer-box .footer-info {
+    margin-left: 30px;
+    line-height: 15px;
+}
