@@ -48,11 +48,11 @@ userRouter.patch('/user/:user_id', upload.single("file"), async function (req, r
 
         const updateUser_sql = `
         UPDATE  foodtour.user
-        SET email = ?, name = ?, nickname = ?, profile_img = IFNULL(?, profile_img)
+        SET name = ?, nickname = ?, profile_img = IFNULL(?, profile_img)
         WHERE id = ?
         ;
         `
-        const updateQuery = await conn.query(updateUser_sql, [req.body.email, req.body.name, req.body.nickname, req.file ? req.file.path : null, req.params.user_id]);
+        const updateQuery = await conn.query(updateUser_sql, [req.body.name, req.body.nickname, req.file ? req.file.path : null, req.params.user_id]);
         conn.release();
         res.json({ message: "프로필 수정 완료" });
     } catch (err) {
@@ -62,6 +62,24 @@ userRouter.patch('/user/:user_id', upload.single("file"), async function (req, r
     }
 })
 
+userRouter.delete('/user/:user_id', async function (req, res) {
+    const conn = await pool.getConnection(async conn => conn);
+    try {
+        console.log("delete: 유저 정보 삭제");
+        console.log(req.params);
+        const deleteUser_sql = `
+        DELETE FROM foodtour.user WHERE foodtour.user.id = ?;
+        `
+        const deleteQuery = await conn.query(deleteUser_sql, [req.params.user_id]);
+        console.log(deleteQuery);
+        conn.release();
+        res.json({ message: "회원 탈퇴 완료" });
+    } catch (err) {
+        console.log(err.message);
+        conn.release();
+        res.status(400).json({ message: '유효하지 않은 User_id입니다.' });
+    }
+})
 
 function createCode(iLength) {
     const objArr = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,~,`,!,@,#,$,%,^,&,*,(,),-,+,|,_,=,\,[,],{,},<,>,?,/,.,;".split(",");

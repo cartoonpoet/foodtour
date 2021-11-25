@@ -3,6 +3,7 @@ import "./ProfileRemove.css";
 import Checkbox from '@mui/material/Checkbox';
 import { Link } from "react-router-dom";
 import { orange } from '@mui/material/colors';
+import axios from "axios";
 
 function ProfileRemove() {
     const [agreement, setAgreement] = useState({
@@ -14,6 +15,25 @@ function ProfileRemove() {
     const { idNotReturnIsOK, myInfoRemoveIsOK, reviewRemoveIsOK } = agreement;
     const onChange = (e) => {
         setAgreement({ ...agreement, [e.target.name]: e.target.checked })
+    };
+
+    const onSubmit = () => {
+        if (!idNotReturnIsOK || !myInfoRemoveIsOK || !reviewRemoveIsOK) {
+            alert("모든 안내문에 대해 동의하셔야 합니다.");
+            return;
+        }
+        const isRemove = window.confirm("정말 탈퇴하시겠습니까?");
+        if (isRemove) {
+            axios.delete("http://localhost:4000/api/cert/user/" + window.localStorage.getItem("id"))
+                .then(function (response) {
+                    console.log(response);
+                    window.localStorage.removeItem("token");
+                    window.localStorage.removeItem("id");
+                    window.localStorage.removeItem("kakao_id");
+                    alert("회원탈퇴 완료");
+                    window.location.href = "/";
+                })
+        }
     };
 
     return (
@@ -63,7 +83,7 @@ function ProfileRemove() {
                     </li>
                     <li className="btn-group">
                         <Link to="/mypage" className="cancel-btn">취소</Link>
-                        <button className="remove-btn">탈퇴</button>
+                        <button className="remove-btn" onClick={onSubmit}>탈퇴</button>
                     </li>
                 </ul>
             </div>

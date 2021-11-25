@@ -60,7 +60,6 @@ function ProfileModify() {
     const onSubmit = () => {
         let fd = new FormData();
         fd.append('file', file);
-        fd.append('email', email);
         fd.append('name', name);
         fd.append('nickname', nickname);
 
@@ -95,11 +94,11 @@ function ProfileModify() {
                     <li className="user-info">
                         <ul className="divided-form">
                             <li className="title">아이디</li>
-                            <li><input type="text" name="username" maxLength="50" value={username} onChange={onChange} disabled /></li>
+                            <li><input type="text" name="username" maxLength="50" value={username} disabled /></li>
                         </ul>
                         <ul className="divided-form">
                             <li className="title">이메일</li>
-                            <li><input type="text" name="email" maxLength="50" value={email} onChange={onChange} /></li>
+                            <li><input type="text" name="email" maxLength="50" value={email} disabled /></li>
                         </ul>
                     </li>
                     <li className="user-info">

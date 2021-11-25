@@ -91,7 +91,7 @@
 
 .wordcloud {
     width: 70%;
-    height: 300px;
+    /* height: 400px; */
     margin: 0 auto;
     overflow: hidden;
     display: flex;
